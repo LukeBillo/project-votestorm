@@ -1,0 +1,214 @@
+swagger: '2.0'
+info:
+  description: This is the back-end API for Project VoteStorm, a voting system.
+  version: 1.0.0
+  title: Project VoteStorm
+
+# tags are used for organizing operations
+tags:
+- name: Presenter
+  description: Presenter's endpoints for managing polls
+- name: Voter
+  description: Endpoints for voting
+
+paths:
+  # Endpoints for Presenter
+  # Poll creation
+  /poll:
+    post:
+      tags:
+      - Presenter
+      summary: Creates a Poll.
+      operationId: CreatePoll
+      description: |
+        This will create a poll. It will work for both plurality and scoring polls,
+        and then return a unique ID (in some format) to the user.
+      produces: 
+      - application/json
+      consumes: 
+      - application/json
+      parameters:
+      - in: body
+        name: Poll
+        description: The configuration for poll being created.
+        required: true
+        schema:
+          $ref: '#/definitions/Poll'
+      responses:
+        201:
+          description: Created the poll.
+          schema:
+            type: string
+            example: "abcde"
+            
+  # For setting the closed state of a poll
+  /poll/{PollId}:
+    put:
+      tags:
+      - Presenter
+      summary: For updating the state of a poll.
+      description: |
+        This is an endpoint for setting whether the poll is currently active - i.e. is it accepting votes.
+      consumes: 
+      - application/json
+      parameters: 
+      - in: body
+        name: IsActive
+        description: Whether the poll is active, i.e. accepting votes.
+        required: true
+        schema:
+          type: boolean
+          example: true
+      - in: path
+        name: PollId
+        description: The 5-letter unique ID for the poll you are getting the results for.
+        required: true
+        type: string
+      responses:
+        200:
+          description: Poll successfully closed.
+        
+  # Poll results
+  /poll/{PollId}/results:
+    get:
+      tags:
+      - Presenter
+      summary: Returns the total votes on each poll option.
+      operationId: PollResultTotals
+      description: |
+        This will return the total votes for each poll option available on the
+        poll. Handles both plurality and scoring poll results.
+      produces: 
+      - application/json
+      parameters: 
+      - in: path
+        name: PollId
+        description: The 5-letter unique ID for the poll you are getting the results for.
+        required: true
+        type: string
+      - in: query
+        name: ResultType
+        description: The format of the results returned.
+        required: true
+        type: string
+      responses:
+        200:
+          description: Successfully returned poll results
+          schema:
+            $ref: '#/definitions/PollResultTotals'
+        404:
+          description: Poll not found.
+        
+  # Poll export
+  /poll/{PollId}/export:
+    get:
+      tags: 
+      - Presenter
+      summary: Export a poll and its results.
+      description: Allows exporting a poll and its results into a CSV format.
+      parameters: 
+      - in: path
+        name: PollId
+        description: The 5-letter unique ID for the poll you are getting the results for.
+        required: true
+        type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            example: {file}
+    
+  
+  # Endpoints for Voters
+  # Voting endpoint
+  /poll/{PollId}/vote:
+    post:
+      tags:
+      - Voter
+      summary: An endpoint for registering a vote.
+      operationId: Vote
+      description: |
+        This is an endpoint for registering a user's vote for a poll. It will check for
+        the voting user's uniqueness in the vote registration process. Handles both scoring and
+        plurality votes.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: PollId
+        description: The 5-letter unique ID for the poll you are getting the results for.
+        required: true
+        type: string
+      - in: body
+        name: UserVote
+        description: The vote being registered.
+        schema:
+          $ref: '#/definitions/UserVote'
+      responses:
+        200:
+          description: Vote successful.
+        400:
+          description: Option did not exist.
+        403:
+          description: Already voted.
+definitions:
+  Poll:
+    type: object
+    required:
+    - options
+    properties:
+      options:
+        type: array
+        items:
+          type: string
+          example: yes
+      pollType:
+        type: string
+        example: plurality
+  UserVote:
+    type: object
+    required:
+    - id
+    - vote
+    properties:
+      id:
+        type: string
+        example: abcde
+      vote:
+        type: object
+  PollResultTotals:
+    type: object
+    required:
+    - id
+    - totals
+    - totalVotes
+    properties:
+      id:
+        type: string
+        example: abcde
+      totals:
+        type: array
+        items:
+          $ref: '#/definitions/OptionValue'
+      totalVotes:
+        type: integer
+        example: 10
+  OptionValue:
+    required:
+    - option
+    - value
+    properties:
+      option:
+        type: string
+        example: "yes"
+      value:
+        type: integer
+        example: 10
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /Personal749/ProjectVotestorm/1.0.0
+schemes:
+ - https
