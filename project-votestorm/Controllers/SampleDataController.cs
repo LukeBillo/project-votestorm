@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace project_votestorm.Controllers
+namespace ProjectVotestorm.Controllers
 {
     [Route("api/[controller]")]
     public class SampleDataController : Controller

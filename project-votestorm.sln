@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "project-votestorm", "project-votestorm\project-votestorm.csproj", "{4B954D89-3BDC-4ACD-A85F-FA062D4B62C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectVotestorm", "project-votestorm\ProjectVotestorm.csproj", "{4B954D89-3BDC-4ACD-A85F-FA062D4B62C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
