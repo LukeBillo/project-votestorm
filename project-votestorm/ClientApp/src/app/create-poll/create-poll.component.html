@@ -1,0 +1,33 @@
+<form [formGroup]="pollForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Create a Poll</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Enter a prompt or question..." formControlName="question">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row" *ngFor="let i of options">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Enter a response..." formControlName="{{ 'option' + i }}"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row" *ngIf="this.options.length < 5">
+        <div class="col">
+          <button mat-button type="button" (click)="createNewOption()">
+            + Add Response / Option
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
