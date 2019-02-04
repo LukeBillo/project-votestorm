@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Dapper;
 using ProjectVotestorm.Models;
+using ProjectVotestorm.Models.Enums;
 
 namespace ProjectVotestorm.Data.Repositories
 {
@@ -36,6 +38,29 @@ namespace ProjectVotestorm.Data.Repositories
                 var options = pollToCreate.Options
                     .Select(option => new { pollToCreate.Id, Text = option });
                 connection.Execute(@"INSERT INTO PollOptions VALUES (@Id, @Text)", options);
+            }
+        }
+
+        public Poll Read(string id)
+        {
+            using (var connection = connectionManager.GetConnection())
+            {
+                var pollData = connection.QueryFirst("SELECT * FROM Poll WHERE id = @Id", new { Id = id });
+                var poll = new Poll
+                {
+                    Id = pollData.id,
+                    Prompt = pollData.prompt,
+                    PollType = (PollType) pollData.pollType
+                };
+
+                var pollOptionData = connection.Query("SELECT * from PollOptions WHERE id = @Id", new { Id = id });
+                poll.Options = new List<string>(pollOptionData.Count());
+                foreach (var option in pollOptionData)
+                {
+                    poll.Options.Add(option.text);
+                }
+
+                return poll;
             }
         }
     }

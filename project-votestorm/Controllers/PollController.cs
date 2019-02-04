@@ -15,12 +15,12 @@ namespace ProjectVotestorm.Controllers
             PollRepository = pollRepo;
         }
 
-        [HttpGet]
-        public IActionResult GetPoll()
+        [HttpGet("{id}")]
+        public IActionResult GetPoll([FromRoute] string id)
         {
-            Console.WriteLine("GET poll " + PollRepository);
+            var poll = PollRepository.Read(id);
 
-            return new EmptyResult();
+            return new OkObjectResult(poll);
         }
 
         [HttpPost]
