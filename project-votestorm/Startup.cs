@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ProjectVotestorm.Data;
+using ProjectVotestorm.Data.Repositories;
 
 namespace ProjectVotestorm
 {
@@ -26,6 +28,9 @@ namespace ProjectVotestorm
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddSingleton<SqlConnectionManager>();
+            services.AddSingleton<PollRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
