@@ -235,3 +235,6 @@ _Pvt_Extensions
 # Client-side
 /**/dist
 /**/wwwroot
+
+# Rider / .IDEA files
+.idea/
