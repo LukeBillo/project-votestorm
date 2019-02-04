@@ -14,9 +14,13 @@ export class PollService {
 
   constructor(private http: HttpClient) {}
 
-  createPoll(poll: Poll): Observable<void> {
-    return this.http.post(`${this.config.apiUrl}/poll/create`, poll).pipe(
+  create(poll: Poll): Observable<void> {
+    return this.http.post(`${this.config.apiUrl}/api/poll`, poll).pipe(
       map(_ => {})
     );
+  }
+
+  get(id: string): Observable<Poll> {
+    return this.http.get<Poll>(`${this.config.apiUrl}/api/poll/${id}`);
   }
 }

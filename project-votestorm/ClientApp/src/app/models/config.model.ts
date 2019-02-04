@@ -3,5 +3,5 @@ export interface Config {
 }
 
 export class DevConfig implements Config {
-  apiUrl = 'https://localhost:5001/';
+  apiUrl = 'https://localhost:5001';
 }

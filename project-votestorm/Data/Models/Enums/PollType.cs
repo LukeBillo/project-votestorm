@@ -1,4 +1,4 @@
-﻿namespace ProjectVotestorm.Models.Enums
+﻿namespace ProjectVotestorm.Data.Models.Enums
 {
     public enum PollType
     {

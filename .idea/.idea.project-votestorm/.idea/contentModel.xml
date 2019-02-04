@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\Luke\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Luke\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_project-votestorm.-1091771192.00" t="ExcludeRecursive" />
+    <e p="E:\dev\year3\AAD\project-votestorm" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="project-votestorm" t="IncludeRecursive">
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="ClientApp" t="Include">
+          <e p=".editorconfig" t="Include" />
+          <e p="angular.json" t="Include" />
+          <e p="e2e" t="Include">
+            <e p="app.e2e-spec.ts" t="Include" />
+            <e p="app.po.ts" t="Include" />
+            <e p="tsconfig.e2e.json" t="Include" />
+          </e>
+          <e p="karma.conf.js" t="Include" />
+          <e p="node_modules" t="ExcludeRecursive">
+            <e p="@angular\animations" t="IncludeRecursive" />
+            <e p="@angular\cdk" t="IncludeRecursive" />
+            <e p="@angular\cli" t="IncludeRecursive" />
+            <e p="@angular\common" t="IncludeRecursive" />
+            <e p="@angular\compiler" t="IncludeRecursive" />
+            <e p="@angular\compiler-cli" t="IncludeRecursive" />
+            <e p="@angular\core" t="IncludeRecursive" />
+            <e p="@angular\forms" t="IncludeRecursive" />
+            <e p="@angular\http" t="IncludeRecursive" />
+            <e p="@angular\material" t="IncludeRecursive" />
+            <e p="@angular\platform-browser" t="IncludeRecursive" />
+            <e p="@angular\platform-browser-dynamic" t="IncludeRecursive" />
+            <e p="@angular\platform-server" t="IncludeRecursive" />
+            <e p="@angular\router" t="IncludeRecursive" />
+            <e p="@angular-devkit\build-angular" t="IncludeRecursive" />
+            <e p="@nguniversal\aspnetcore-engine" t="IncludeRecursive" />
+            <e p="@nguniversal\module-map-ngfactory-loader" t="IncludeRecursive" />
+            <e p="@types" t="IncludeRecursive">
+              <e p="jasmine" t="IncludeRecursive" />
+              <e p="jasminewd2" t="IncludeRecursive" />
+              <e p="node" t="IncludeRecursive" />
+            </e>
+            <e p="aspnet-prerendering" t="IncludeRecursive" />
+            <e p="bootstrap" t="IncludeRecursive" />
+            <e p="codelyzer" t="IncludeRecursive" />
+            <e p="core-js" t="IncludeRecursive" />
+            <e p="jasmine-core" t="IncludeRecursive" />
+            <e p="jasmine-spec-reporter" t="IncludeRecursive" />
+            <e p="karma" t="IncludeRecursive" />
+            <e p="karma-chrome-launcher" t="IncludeRecursive" />
+            <e p="karma-coverage-istanbul-reporter" t="IncludeRecursive" />
+            <e p="karma-jasmine" t="IncludeRecursive" />
+            <e p="karma-jasmine-html-reporter" t="IncludeRecursive" />
+            <e p="node-sass" t="IncludeRecursive" />
+            <e p="protractor" t="IncludeRecursive" />
+            <e p="rxjs" t="IncludeRecursive" />
+            <e p="ts-node" t="IncludeRecursive" />
+            <e p="tslib" t="IncludeRecursive" />
+            <e p="tslint" t="IncludeRecursive" />
+            <e p="zone.js" t="IncludeRecursive" />
+          </e>
+          <e p="package-lock.json" t="Include" />
+          <e p="package.json" t="Include" />
+          <e p="protractor.conf.js" t="Include" />
+          <e p="README.md" t="Include" />
+          <e p="src" t="Include">
+            <e p="app" t="Include">
+              <e p="app.component.html" t="Include" />
+              <e p="app.component.scss" t="Include" />
+              <e p="app.component.ts" t="Include" />
+              <e p="app.module.ts" t="Include" />
+              <e p="create-poll" t="Include">
+                <e p="create-poll.component.html" t="Include" />
+                <e p="create-poll.component.scss" t="Include" />
+                <e p="create-poll.component.spec.ts" t="Include" />
+                <e p="create-poll.component.ts" t="Include" />
+              </e>
+              <e p="home" t="Include">
+                <e p="home.component.html" t="Include" />
+                <e p="home.component.ts" t="Include" />
+              </e>
+              <e p="Models" t="Include">
+                <e p="config.model.ts" t="Include" />
+                <e p="poll-type.enum.ts" t="Include" />
+                <e p="poll.model.ts" t="Include" />
+              </e>
+              <e p="nav-bar" t="Include">
+                <e p="nav-bar.component.html" t="Include" />
+                <e p="nav-bar.component.scss" t="Include" />
+                <e p="nav-bar.component.spec.ts" t="Include" />
+                <e p="nav-bar.component.ts" t="Include" />
+              </e>
+              <e p="services" t="Include">
+                <e p="poll.service.spec.ts" t="Include" />
+                <e p="poll.service.ts" t="Include" />
+              </e>
+            </e>
+            <e p="assets" t="Include">
+              <e p=".gitkeep" t="Include" />
+            </e>
+            <e p="environments" t="Include">
+              <e p="environment.prod.ts" t="Include" />
+              <e p="environment.ts" t="Include" />
+            </e>
+            <e p="index.html" t="Include" />
+            <e p="main.ts" t="Include" />
+            <e p="polyfills.ts" t="Include" />
+            <e p="styles.scss" t="Include" />
+            <e p="test.ts" t="Include" />
+            <e p="tsconfig.app.json" t="Include" />
+            <e p="tsconfig.spec.json" t="Include" />
+            <e p="typings.d.ts" t="Include" />
+          </e>
+          <e p="tsconfig.json" t="Include" />
+          <e p="tslint.json" t="Include" />
+        </e>
+        <e p="Controllers" t="Include">
+          <e p="PollController.cs" t="Include" />
+        </e>
+        <e p="Data" t="Include">
+          <e p="Models" t="Include">
+            <e p="Enums" t="Include">
+              <e p="PollType.cs" t="Include" />
+            </e>
+            <e p="Poll.cs" t="Include" />
+            <e p="Requests" t="Include" />
+            <e p="Responses" t="Include" />
+          </e>
+          <e p="Repositories" t="Include">
+            <e p="PollRepository.cs" t="Include" />
+          </e>
+          <e p="SqlConnectionManager.cs" t="Include" />
+        </e>
+        <e p="docker-compose.yml" t="Include" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.1" t="Include">
+              <e p="ProjectVotestorm.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Pages" t="Include">
+          <e p="_ViewImports.cshtml" t="Include" />
+          <e p="Error.cshtml" t="Include" />
+          <e p="Error.cshtml.cs" t="Include" />
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="ProjectVotestorm.csproj" t="IncludeRecursive" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+      </e>
+      <e p="project-votestorm.sln" t="IncludeFlat" />
+    </e>
+  </component>
+</project>

@@ -28,8 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Models\Requests\" />
-    <Folder Include="Data\Models\Responses\" />
+    <Folder Include="Data\Validators\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

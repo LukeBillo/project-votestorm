@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Poll } from '../models/poll.model';
 import { PollType } from '../models/poll-type.enum';
+import { PollService } from '../services/poll.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'create-poll',
@@ -10,12 +12,12 @@ import { PollType } from '../models/poll-type.enum';
 })
 export class CreatePollComponent {
   pollForm = this.formBuilder.group({
-    question: ['', Validators.required]
+    prompt: ['', Validators.required]
   });
 
   options: Array<number> = [0, 1];
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private pollService: PollService, private router: Router) {
     this.pollForm.addControl('option0', new FormControl(''));
     this.pollForm.addControl('option1', new FormControl(''));
   }
@@ -30,13 +32,15 @@ export class CreatePollComponent {
   onSubmit() {
     const poll = this.constructPoll();
 
-    console.log(poll);
+    this.pollService.create(poll).subscribe(_ => {
+      this.router.navigate(['/']);
+    });
   }
 
   private constructPoll(): Poll {
     const form = this.pollForm.controls;
 
-    const question = form.question.value;
+    const prompt = form.prompt.value;
     const options = [];
     const pollType: PollType = PollType.Plurality;
 
@@ -44,6 +48,6 @@ export class CreatePollComponent {
       options.push(form[`option${i}`].value);
     }
 
-    return { question, options, pollType };
+    return { prompt: prompt, options, pollType };
   }
 }

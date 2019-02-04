@@ -1,66 +1,54 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Dapper;
-using ProjectVotestorm.Models;
-using ProjectVotestorm.Models.Enums;
+using Dapper.Contrib.Extensions;
+using ProjectVotestorm.Data.Models.Database;
+using ProjectVotestorm.Data.Models.Http;
 
 namespace ProjectVotestorm.Data.Repositories
 {
-    public class PollRepository
+    public class PollRepository : IPollRepository
     {
-        private SqlConnectionManager connectionManager;
+        private readonly SqlConnectionManager _connectionManager;
 
-        public PollRepository(SqlConnectionManager manager)
+        public PollRepository(SqlConnectionManager connectionManager)
         {
-            connectionManager = manager;
+            _connectionManager = connectionManager;
 
-            using (var connection = connectionManager.GetConnection())
+            using (var connection = _connectionManager.GetConnection())
             {
                 connection.Execute(@"CREATE TABLE IF NOT EXISTS Poll
-(id VARCHAR(5) PRIMARY KEY, prompt VARCHAR(256), pollType INTEGER)");
+                (id VARCHAR(5) PRIMARY KEY, prompt VARCHAR(256), pollType INTEGER)");
+
                 connection.Execute(@"CREATE TABLE IF NOT EXISTS PollOptions
-(id VARCHAR(5), text VARCHAR(256))");
+                (pollId VARCHAR(5), optionText VARCHAR(256))");
             }
         }
 
-        public void Create(Poll pollToCreate)
+        public async Task Create(string id, CreatePollRequest pollToCreate)
         {
-            using (var connection = connectionManager.GetConnection())
+            using (var connection = _connectionManager.GetConnection())
             {
-                connection.Execute(@"INSERT INTO Poll VALUES (@Id, @Prompt, @PollType)",
-                    new
-                    {
-                        pollToCreate.Id,
-                        pollToCreate.Prompt,
-                        pollToCreate.PollType
-                    });
+                var pollToInsert = new Poll(id, pollToCreate);
+                await connection.InsertAsync(pollToInsert);
 
-                var options = pollToCreate.Options
-                    .Select(option => new { pollToCreate.Id, Text = option });
-                connection.Execute(@"INSERT INTO PollOptions VALUES (@Id, @Text)", options);
-            }
-        }
-
-        public Poll Read(string id)
-        {
-            using (var connection = connectionManager.GetConnection())
-            {
-                var pollData = connection.QueryFirst("SELECT * FROM Poll WHERE id = @Id", new { Id = id });
-                var poll = new Poll
+                foreach (var option in pollToCreate.Options)
                 {
-                    Id = pollData.id,
-                    Prompt = pollData.prompt,
-                    PollType = (PollType) pollData.pollType
-                };
-
-                var pollOptionData = connection.Query("SELECT * from PollOptions WHERE id = @Id", new { Id = id });
-                poll.Options = new List<string>(pollOptionData.Count());
-                foreach (var option in pollOptionData)
-                {
-                    poll.Options.Add(option.text);
+                    var optionToInsert = new PollOption(id, option);
+                    await connection.InsertAsync(optionToInsert);
                 }
+            }
+        }
 
-                return poll;
+        public async Task<PollResponse> Read(string id)
+        {
+            using (var connection = _connectionManager.GetConnection())
+            {
+                var poll = await connection.QueryFirstAsync<Poll>("SELECT * FROM Poll WHERE Id = @Id", new { Id = id });
+                var pollOptions = await connection.QueryAsync<PollOption>("SELECT * FROM PollOptions WHERE PollId = @Id", new { Id = id });
+
+                return new PollResponse(poll, pollOptions);
             }
         }
     }

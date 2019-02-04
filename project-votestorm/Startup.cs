@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProjectVotestorm.Data;
 using ProjectVotestorm.Data.Repositories;
+using ProjectVotestorm.Data.Utils;
 
 namespace ProjectVotestorm
 {
@@ -30,7 +31,8 @@ namespace ProjectVotestorm
             });
 
             services.AddSingleton<SqlConnectionManager>();
-            services.AddSingleton<PollRepository>();
+            services.AddSingleton<IPollRepository, PollRepository>();
+            services.AddSingleton<IPollIdGenerator, PollIdGenerator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
