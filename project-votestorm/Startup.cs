@@ -33,6 +33,7 @@ namespace ProjectVotestorm
             services.AddSingleton<SqlConnectionManager>();
             services.AddSingleton<IPollRepository, PollRepository>();
             services.AddSingleton<IPollIdGenerator, PollIdGenerator>();
+            services.AddSingleton<VoteRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
