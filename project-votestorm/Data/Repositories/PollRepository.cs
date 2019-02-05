@@ -22,7 +22,7 @@ namespace ProjectVotestorm.Data.Repositories
                 (id VARCHAR(5) PRIMARY KEY, prompt VARCHAR(256), pollType INTEGER)");
 
                 connection.Execute(@"CREATE TABLE IF NOT EXISTS PollOptions
-                (pollId VARCHAR(5), optionText VARCHAR(256))");
+                (pollId VARCHAR(5), optionText VARCHAR(256), optionIndex INTEGER)");
             }
         }
 
@@ -33,9 +33,11 @@ namespace ProjectVotestorm.Data.Repositories
                 var pollToInsert = new Poll(id, pollToCreate);
                 await connection.InsertAsync(pollToInsert);
 
-                foreach (var option in pollToCreate.Options)
+                for (int optionIndex = 0; optionIndex < pollToCreate.Options.Count; optionIndex++)
                 {
-                    var optionToInsert = new PollOption(id, option);
+                    string option = pollToCreate.Options[optionIndex];
+
+                    var optionToInsert = new PollOption(id, option, optionIndex);
                     await connection.InsertAsync(optionToInsert);
                 }
             }
