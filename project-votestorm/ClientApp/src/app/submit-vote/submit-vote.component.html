@@ -3,7 +3,7 @@
     <mat-card-header>
       <mat-card-title>Cast a Vote</mat-card-title>
       <mat-card-subtitle *ngIf="poll"> {{poll.prompt}}</mat-card-subtitle>
-      
+
     </mat-card-header>
     <mat-card-content>
 
@@ -12,21 +12,7 @@
         {{o}}
         </mat-radio-button>
       </mat-radio-group>
-        <!--<div class="row" *ngFor="let o of poll.options; let i = index">
-          <div class="col">
-            
 
-            <input type="radio" formControlName="options">
-          </div>
-        </div>-->
-      
-      <!--<div class="row" *ngIf="this.options.length < 5">
-        <div class="col">
-          <button mat-button type="button" (click)="createNewOption()">
-            + Add Response / Option
-          </button>
-        </div>
-      </div>-->
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit">Submit</button>

@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Poll } from '../models/poll.model';
 import { PluralityVote } from '../models/vote.model';
 import { Observable } from 'rxjs';
+import { IdentityService } from '../services/identity.service';
 
 @Component({
   selector: 'submit-vote',
@@ -24,7 +25,7 @@ export class SubmitVoteComponent {
 
   constructor(private formBuilder: FormBuilder, private voteService: VoteService,
     private pollService: PollService, private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute, private identityService: IdentityService) {
 
     activatedRoute.params.subscribe(params => {
     this.pollID = params['pollId'];
@@ -35,23 +36,11 @@ export class SubmitVoteComponent {
 
       this.poll = poll;
       this.options = poll.options;
-
-      console.log(poll);
-      // let controlNames = {};
-
-      // for (let o = 0; o < this.poll.options.length; o++)
-      // {
-      //  controlNames["option" + o] = ['', Validators.required];
-      // }
-
-     // this.voteForm = formBuilder.group({ options: ['1', Validators.required] });
-
-     // console.log(controlNames);
     });
   }
   public onSubmit() {
    const vote: PluralityVote = new PluralityVote();
-    vote.Identity = 'changeme';
+    vote.Identity = this.identityService.get();
     vote.pollId = this.pollID;
 
     vote.selectionIndex = this.voteForm.controls.options.value;
@@ -59,6 +48,5 @@ export class SubmitVoteComponent {
     this.voteService.submit(vote).subscribe(_ => {
       this.router.navigateByUrl('/');
     });
-    // this.router.navigateByUrl('/');
   }
 }
