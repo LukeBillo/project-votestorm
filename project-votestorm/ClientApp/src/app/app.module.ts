@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreatePollComponent } from './create-poll/create-poll.component';
+import { SubmitVoteComponent } from './submit-vote/submit-vote.component';
 import {
   MatInputModule,
   MatButtonModule,
@@ -26,6 +27,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     AppComponent,
     HomeComponent,
     CreatePollComponent,
+    SubmitVoteComponent,
     NavBarComponent
   ],
   imports: [
@@ -34,7 +36,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'create', component: CreatePollComponent, pathMatch: 'full' }
+      { path: 'create', component: CreatePollComponent, pathMatch: 'full' },
+      { path: 'vote/:pollId', component: SubmitVoteComponent },
     ]),
     BrowserAnimationsModule,
     MatInputModule,
