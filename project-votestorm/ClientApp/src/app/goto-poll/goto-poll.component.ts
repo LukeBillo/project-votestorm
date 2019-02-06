@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'goto-poll',
-  templateUrl: './goto-poll.component.html'
+  templateUrl: './goto-poll.component.html',
+  styleUrls: ['./goto-poll.component.scss']
 })
 export class GotoPollComponent {
   // TODO: add validator for min/max length and/or regex

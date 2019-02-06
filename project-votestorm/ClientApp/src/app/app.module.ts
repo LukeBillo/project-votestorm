@@ -50,8 +50,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     LayoutModule,
     MatMenuModule,
     MatIconModule,
-    MatListModule,
-    MatButtonModule
+    MatListModule
   ],
   // TODO: factory provider for IConfig
   providers: [],
