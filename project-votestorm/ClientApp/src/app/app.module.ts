@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreatePollComponent } from './create-poll/create-poll.component';
+import { GotoPollComponent } from './goto-poll/goto-poll.component';
+import { PollComponent } from './poll/poll.component';
 import {
   MatInputModule,
   MatButtonModule,
@@ -26,7 +28,9 @@ import { LayoutModule } from '@angular/cdk/layout';
     AppComponent,
     HomeComponent,
     CreatePollComponent,
-    NavBarComponent
+    NavBarComponent,
+    GotoPollComponent,
+    PollComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,7 +38,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'create', component: CreatePollComponent, pathMatch: 'full' }
+      { path: ':pollId', component: PollComponent, pathMatch: 'full' }
     ]),
     BrowserAnimationsModule,
     MatInputModule,
