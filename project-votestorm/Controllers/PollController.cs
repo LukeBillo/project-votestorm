@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using ProjectVotestorm.Data.Models;
 using ProjectVotestorm.Data.Models.Http;
@@ -33,7 +34,7 @@ namespace ProjectVotestorm.Controllers
             var pollId = _pollIdGenerator.Generate();
             await _pollRepository.Create(pollId, poll);
 
-            return new OkResult();
+            return new CreatedResult($"{ControllerContext.HttpContext.Request.GetDisplayUrl()}/{pollId}", poll);
         }
     }
 }

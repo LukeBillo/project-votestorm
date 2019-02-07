@@ -14,8 +14,9 @@ export class CreatePollComponent {
   pollForm = this.formBuilder.group({
     prompt: ['', Validators.required]
   });
-
   options: Array<number> = [0, 1];
+  created = false;
+  createdPollId: string;
 
   constructor(private formBuilder: FormBuilder, private pollService: PollService, private router: Router) {
     this.pollForm.addControl('option0', new FormControl(''));
@@ -25,15 +26,19 @@ export class CreatePollComponent {
   createNewOption() {
     const optionControlName = `option${this.options.length}`;
     this.pollForm.addControl(optionControlName, new FormControl());
-
     this.options.push(this.options.length);
   }
 
   onSubmit() {
     const poll = this.constructPoll();
 
-    this.pollService.create(poll).subscribe(_ => {
-      this.router.navigate(['/']);
+    this.pollService.create(poll).subscribe(result => {
+        this.created = true;
+
+        // last element of the object location will
+        // be the poll's ID
+        // location is in format 'http://localhost:5000/api/poll/abcde'
+        this.createdPollId = result.location.split('/').pop();
     });
   }
 
@@ -48,6 +53,6 @@ export class CreatePollComponent {
       options.push(form[`option${i}`].value);
     }
 
-    return { prompt: prompt, options, pollType };
+    return { prompt, options, pollType };
   }
 }

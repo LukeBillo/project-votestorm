@@ -1,4 +1,4 @@
-<form [formGroup]="pollForm" novalidate (ngSubmit)="onSubmit()">
+<form [formGroup]="pollForm" novalidate (ngSubmit)="onSubmit()" *ngIf="!created; else createdTemplate">
   <mat-card class="shipping-card">
     <mat-card-header>
       <mat-card-title>Create a Poll</mat-card-title>
@@ -33,3 +33,10 @@
     </mat-card-actions>
   </mat-card>
 </form>
+<ng-template #createdTemplate>
+  <div class="row">
+    <div class="col">
+      <h3>Your poll has been created. You can access your poll using the ID: {{ createdPollId }}</h3>
+    </div>
+  </div>
+</ng-template>

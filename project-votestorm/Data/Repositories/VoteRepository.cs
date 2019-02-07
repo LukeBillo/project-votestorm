@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjectVotestorm.Data.Repositories
 {
-    public class VoteRepository
+    public class VoteRepository : IVoteRepository
     {
         private readonly SqlConnectionManager _connectionManager;
 
