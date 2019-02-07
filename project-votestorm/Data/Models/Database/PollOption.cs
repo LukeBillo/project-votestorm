@@ -12,15 +12,18 @@ namespace ProjectVotestorm.Data.Models.Database
          */
         public PollOption() {}
 
-        public PollOption(string id, string text)
+        public PollOption(string id, string text, int index)
         {
             PollId = id;
             OptionText = text;
+            OptionIndex = index;
         }
+        [ExplicitKey]
+        public int OptionIndex { get; set; }
 
         [ExplicitKey]
         public string PollId { get; set; }
-        [ExplicitKey]
+
         public string OptionText { get; set; }
     }
 }

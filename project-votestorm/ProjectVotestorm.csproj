@@ -28,7 +28,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\models\vote.model.ts" />
+    <None Remove="ClientApp\src\app\services\vote.service.ts" />
+    <None Remove="ClientApp\src\app\submit-vote\submit-vote.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\Validators\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\vote.model.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\vote.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\submit-vote\submit-vote.component.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

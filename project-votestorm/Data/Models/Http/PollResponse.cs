@@ -12,7 +12,8 @@ namespace ProjectVotestorm.Data.Models.Http
             Id = poll.Id;
             Prompt = poll.Prompt;
             PollType = poll.PollType;
-            Options = options.Select(option => option.OptionText).ToList();
+            Options = options.OrderBy(option=>option.OptionIndex)
+                .Select(option => option.OptionText).ToList();
         }
 
         public string Id { get; set; }
