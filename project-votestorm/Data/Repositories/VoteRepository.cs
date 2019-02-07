@@ -27,6 +27,14 @@ namespace ProjectVotestorm.Data.Repositories
             }
         }
 
+        public async Task<IEnumerable<PluralityVote>> Get(string pollId)
+        {
+            using (var connection = _connectionManager.GetConnection())
+            {
+                return await connection.GetAllAsync<PluralityVote>();
+            }
+        }
+
         public async Task Create(CreatePluralityVoteRequest pollToCreate, string pollId)
         {
             using (var connection = _connectionManager.GetConnection())
