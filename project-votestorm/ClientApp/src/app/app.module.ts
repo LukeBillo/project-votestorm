@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreatePollComponent } from './create-poll/create-poll.component';
+import { GotoPollComponent } from './goto-poll/goto-poll.component';
 import { SubmitVoteComponent } from './submit-vote/submit-vote.component';
 import {
   MatInputModule,
@@ -27,6 +28,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     AppComponent,
     HomeComponent,
     CreatePollComponent,
+    NavBarComponent,
+    GotoPollComponent,
     SubmitVoteComponent,
     NavBarComponent
   ],
@@ -36,8 +39,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'create', component: CreatePollComponent, pathMatch: 'full' },
-      { path: 'vote/:pollId', component: SubmitVoteComponent },
+      { path: ':pollId', component: SubmitVoteComponent, pathMatch: 'full' }
     ]),
     BrowserAnimationsModule,
     MatInputModule,
@@ -49,8 +51,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     LayoutModule,
     MatMenuModule,
     MatIconModule,
-    MatListModule,
-    MatButtonModule
+    MatListModule
   ],
   // TODO: factory provider for IConfig
   providers: [],

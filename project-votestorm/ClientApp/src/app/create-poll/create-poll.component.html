@@ -3,31 +3,23 @@
     <mat-card-header>
       <mat-card-title>Create a Poll</mat-card-title>
     </mat-card-header>
-    <mat-card-content>
-      <div class="row">
-        <div class="col">
-          <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Enter a prompt or question...</mat-label>
-            <input matInput formControlName="prompt">
-            <mat-hint>This will be the prompt that appears at the top of the poll.</mat-hint>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row" *ngFor="let i of options">
-        <div class="col">
-          <mat-form-field class="response" appearance="standard">
-            <input matInput placeholder="Enter a response..." formControlName="{{ 'option' + i }}">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row" *ngIf="this.options.length < 5">
-        <div class="col">
-          <button mat-button type="button" (click)="createNewOption()">
-            + Add Response / Option
-          </button>
-        </div>
-      </div>
+
+    <mat-card-content class="full-size-card-content">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Enter a prompt or question...</mat-label>
+        <input matInput formControlName="prompt">
+        <mat-hint>This will be the prompt that appears at the top of the poll.</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field appearance="standard" *ngFor="let i of options">
+        <input matInput placeholder="Enter a response..." formControlName="{{ 'option' + i }}">
+      </mat-form-field>
+
+      <button mat-button type="button" (click)="createNewOption()" *ngIf="this.options.length < 5">
+        + Add Response / Option
+      </button>
     </mat-card-content>
+
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit">Submit</button>
     </mat-card-actions>
