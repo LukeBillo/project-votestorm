@@ -8,5 +8,6 @@ namespace ProjectVotestorm.Data.Repositories
     {
         Task Create(string id, CreatePollRequest pollToCreate);
         Task<PollResponse> Read(string id);
+        Task Update(string id, CreatePollActivateRequest activateRequest);
     }
 }

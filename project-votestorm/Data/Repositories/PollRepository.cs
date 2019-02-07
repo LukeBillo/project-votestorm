@@ -54,5 +54,13 @@ namespace ProjectVotestorm.Data.Repositories
                 return new PollResponse(poll, pollOptions);
             }
         }
+        public async Task Update(string id, CreatePollActivateRequest activateRequest){
+            using (var connection = _connectionManager.GetConnection())
+            {
+                await connection.ExecuteAsync(
+                "UPDATE Poll set isOpen = @isActive WHERE Id = @Id", 
+                new {isActive = activateRequest.isActive, Id = id});               
+            }
+        }
     }
 }
