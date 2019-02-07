@@ -12,6 +12,8 @@ namespace ProjectVotestorm.Data.Models.Http
             Id = poll.Id;
             Prompt = poll.Prompt;
             PollType = poll.PollType;
+            IsOpen = poll.IsOpen;
+            AdminID = poll.AdminID;
             Options = options.OrderBy(option=>option.OptionIndex)
                 .Select(option => option.OptionText).ToList();
         }
@@ -20,5 +22,7 @@ namespace ProjectVotestorm.Data.Models.Http
         public string Prompt { get; set; }
         public List<string> Options { get; set; }
         public PollType PollType { get; set; }
+        public bool IsOpen{get;set;}
+        public string AdminID{get;set;}
     }
 }
