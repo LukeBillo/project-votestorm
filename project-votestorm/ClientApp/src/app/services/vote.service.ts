@@ -20,4 +20,7 @@ export class VoteService {
     );
   }
 
+  checkHasVoted(pollId: string, identity: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.config.apiUrl}/api/poll/${pollId}?identity=${identity}`);
+  }
 }

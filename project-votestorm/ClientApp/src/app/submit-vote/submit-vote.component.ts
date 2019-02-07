@@ -17,7 +17,7 @@ export class SubmitVoteComponent {
   pollID: string;
   options: Array<string>;
   poll: Poll;
-
+  hasVoted: boolean;
 
   voteForm: FormGroup = this.formBuilder.group({ options: ['1', Validators.required] });
 
@@ -29,9 +29,17 @@ export class SubmitVoteComponent {
       this.pollID = params['pollId'];
     });
 
-    pollService.get(this.pollID).subscribe(poll => {
-      this.poll = poll;
-      this.options = poll.options;
+    voteService.checkHasVoted(this.pollID, this.identityService.get()).subscribe(hasVoted => {
+      this.hasVoted = hasVoted;
+
+      if (hasVoted) {
+        return;
+      }
+
+      pollService.get(this.pollID).subscribe(poll => {
+        this.poll = poll;
+        this.options = poll.options;
+      });
     });
   }
   public onSubmit() {
@@ -42,7 +50,7 @@ export class SubmitVoteComponent {
     };
 
     this.voteService.submit(vote).subscribe(_ => {
-      this.router.navigateByUrl('/');
+      this.hasVoted = true;
     });
   }
 }

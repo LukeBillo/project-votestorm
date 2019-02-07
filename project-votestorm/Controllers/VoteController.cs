@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProjectVotestorm.Data.Models.Http;
 using ProjectVotestorm.Data.Repositories;
+using ProjectVotestorm.Data.Utils;
 
 namespace ProjectVotestorm.Controllers
 {
-    [Route("api/poll/{pollid}/vote")]
+    [Route("api/poll/{pollid}")]
     public class VoteController : Controller
     {
         private readonly IVoteRepository _voteRepository;
@@ -15,6 +16,15 @@ namespace ProjectVotestorm.Controllers
         public VoteController(IVoteRepository voteRepository)
         {
             _voteRepository = voteRepository;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetHasVoted([FromQuery] string pollId, [FromQuery] string identity)
+        {
+            var votes = await _voteRepository.Get(pollId);
+            var hasVoted = votes.First(vote => vote.Identity == identity) != null;
+
+            return new OkObjectResult(hasVoted);
         }
 
         [HttpPost]
