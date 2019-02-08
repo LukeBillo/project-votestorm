@@ -4,4 +4,5 @@ export interface Poll {
   prompt: string;
   options: Array<string>;
   pollType: PollType;
+  adminID: string;
 }

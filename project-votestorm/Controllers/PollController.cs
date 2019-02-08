@@ -31,9 +31,24 @@ namespace ProjectVotestorm.Controllers
         public async Task<IActionResult> CreatePoll([FromBody] CreatePollRequest poll)
         {
             var pollId = _pollIdGenerator.Generate();
+            //poll.
             await _pollRepository.Create(pollId, poll);
 
             return new OkResult();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> SetPollState(
+            [FromRoute] string id, [FromBody] CreatePollActivateRequest activateRequest )
+        {
+            var poll = await _pollRepository.Read(id);
+            if (activateRequest.adminIdentity==poll.AdminID){
+                await _pollRepository.Update(id,activateRequest);
+                return new OkResult();
+            }
+            else {
+                return new ForbidResult();
+            }
         }
     }
 }

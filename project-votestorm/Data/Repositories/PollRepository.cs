@@ -19,7 +19,8 @@ namespace ProjectVotestorm.Data.Repositories
             using (var connection = _connectionManager.GetConnection())
             {
                 connection.Execute(@"CREATE TABLE IF NOT EXISTS Poll
-                (id VARCHAR(5) PRIMARY KEY, prompt VARCHAR(256), pollType INTEGER)");
+                (id VARCHAR(5) PRIMARY KEY, prompt VARCHAR(256), pollType INTEGER,
+                isOpen BOOLEAN, adminID VARCHAR(40))");
 
                 connection.Execute(@"CREATE TABLE IF NOT EXISTS PollOptions
                 (pollId VARCHAR(5), optionText VARCHAR(256), optionIndex INTEGER)");
@@ -51,6 +52,14 @@ namespace ProjectVotestorm.Data.Repositories
                 var pollOptions = await connection.QueryAsync<PollOption>("SELECT * FROM PollOptions WHERE PollId = @Id", new { Id = id });
 
                 return new PollResponse(poll, pollOptions);
+            }
+        }
+        public async Task Update(string id, CreatePollActivateRequest activateRequest){
+            using (var connection = _connectionManager.GetConnection())
+            {
+                await connection.ExecuteAsync(
+                "UPDATE Poll set isOpen = @isActive WHERE Id = @Id", 
+                new {isActive = activateRequest.isActive, Id = id});               
             }
         }
     }
