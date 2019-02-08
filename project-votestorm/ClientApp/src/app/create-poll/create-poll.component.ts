@@ -4,6 +4,7 @@ import { Poll } from '../models/poll.model';
 import { PollType } from '../models/poll-type.enum';
 import { PollService } from '../services/poll.service';
 import { Router } from '@angular/router';
+import { IdentityService } from '../services/identity.service';
 
 @Component({
   selector: 'create-poll',
@@ -18,7 +19,9 @@ export class CreatePollComponent {
   created = false;
   createdPollId: string;
 
-  constructor(private formBuilder: FormBuilder, private pollService: PollService, private router: Router) {
+  constructor(private formBuilder: FormBuilder,
+     private pollService: PollService, private router: Router,
+     private identityService: IdentityService) {
     this.pollForm.addControl('option0', new FormControl(''));
     this.pollForm.addControl('option1', new FormControl(''));
   }
@@ -30,6 +33,7 @@ export class CreatePollComponent {
   }
 
   onSubmit() {
+    console.log('asdfasdfasdf');
     const poll = this.constructPoll();
 
     this.pollService.create(poll).subscribe(result => {
@@ -48,11 +52,12 @@ export class CreatePollComponent {
     const prompt = form.prompt.value;
     const options = [];
     const pollType: PollType = PollType.Plurality;
+    const identity: string = this.identityService.get();
 
     for (let i = 0; i < this.options.length; i++) {
       options.push(form[`option${i}`].value);
     }
 
-    return { prompt, options, pollType };
+    return { prompt, options, pollType, identity };
   }
 }

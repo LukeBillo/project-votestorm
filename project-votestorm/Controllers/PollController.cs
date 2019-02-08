@@ -1,8 +1,6 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using ProjectVotestorm.Data.Models;
 using ProjectVotestorm.Data.Models.Http;
 using ProjectVotestorm.Data.Repositories;
 using ProjectVotestorm.Data.Utils;
@@ -35,6 +33,20 @@ namespace ProjectVotestorm.Controllers
             await _pollRepository.Create(pollId, poll);
 
             return new CreatedResult($"{ControllerContext.HttpContext.Request.GetDisplayUrl()}/{pollId}", poll);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> SetPollState(
+            [FromRoute] string id, [FromBody] CreatePollActivateRequest activateRequest )
+        {
+            var poll = await _pollRepository.Read(id);
+
+            if (activateRequest.AdminIdentity != poll.Identity)
+                return new ForbidResult();
+
+            await _pollRepository.Update(id,activateRequest);
+            return new OkResult();
+
         }
     }
 }
