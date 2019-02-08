@@ -22,6 +22,7 @@ import {
 } from '@angular/material';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { PollResultsComponent } from './poll-results/poll-results.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     NavBarComponent,
     GotoPollComponent,
     SubmitVoteComponent,
-    NavBarComponent
+    NavBarComponent,
+    PollResultsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

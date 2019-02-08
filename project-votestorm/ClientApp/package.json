@@ -27,6 +27,7 @@
     "@angular/router": "7.1.0",
     "@nguniversal/aspnetcore-engine": "^7.0.2",
     "@nguniversal/module-map-ngfactory-loader": "^7.0.2",
+    "@swimlane/ngx-charts": "^10.0.0",
     "aspnet-prerendering": "^3.0.1",
     "bootstrap": "^4.2.1",
     "core-js": "^2.4.1",
