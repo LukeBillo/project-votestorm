@@ -1,41 +1,8 @@
-.full-width {
+mat-form-field {
+  width: 90%;
+  margin: 0 2rem;
+}
+
+.full-size-card-content > * {
   width: 100%;
-}
-
-.shipping-card {
-  min-width: 120px;
-  margin: 20px auto;
-}
-
-.mat-radio-button {
-  display: block;
-  margin: 5px 0;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  margin: 1rem 0rem;
-}
-
-.col {
-  flex: 1;
-  margin-right: 2rem;
-}
-
-.col:last-child {
-  margin-right: 0;
-}
-
-.response {
-  margin-left: 1.5rem;
-  width: 400px;
-}
-
-.mat-card {
-  padding: 2.5rem;
-}
-
-.mat-card-header .mat-card-title {
-  margin-bottom: 2rem;
 }
