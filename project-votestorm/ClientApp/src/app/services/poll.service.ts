@@ -10,10 +10,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class PollService {
-  // TODO: provide this via factory in app.module
-  config: Config = new DevConfig();
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private config: Config) {}
 
   create(poll: Poll): Observable<CreatedResponse<Poll>> {
     return this.http.post(`${this.config.apiUrl}/api/poll`, poll, { observe: 'response' }).pipe(

@@ -1,4 +1,4 @@
-export interface Config {
+export abstract class Config {
   readonly apiUrl: string;
 }
 

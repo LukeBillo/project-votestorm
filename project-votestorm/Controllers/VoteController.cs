@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProjectVotestorm.Data.Models.Http;
 using ProjectVotestorm.Data.Repositories;
-using ProjectVotestorm.Data.Utils;
 
 namespace ProjectVotestorm.Controllers
 {
@@ -18,21 +16,21 @@ namespace ProjectVotestorm.Controllers
             _voteRepository = voteRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetHasVoted([FromQuery] string pollId, [FromQuery] string identity)
+        [HttpGet("voted")]
+        public async Task<IActionResult> GetHasVoted([FromRoute] string pollId, [FromQuery] string identity)
         {
             var votes = await _voteRepository.Get(pollId);
-            var hasVoted = votes.First(vote => vote.Identity == identity) != null;
+            var hasVoted = votes.FirstOrDefault(vote => vote.Identity == identity) != null;
 
             return new OkObjectResult(hasVoted);
         }
 
-        [HttpPost]
+        [HttpPost("vote")]
         public async Task<IActionResult> SubmitVote([FromBody] CreatePluralityVoteRequest voteRequest, [FromRoute] string pollId)
         {
             var votes = await _voteRepository.Get(pollId);
 
-            if (votes.First(vote => vote.Identity == voteRequest.Identity) != null)
+            if (votes.FirstOrDefault(vote => vote.Identity == voteRequest.Identity) != null)
             {
                 return new ConflictObjectResult($"That user already voted on the poll with ID {pollId}.");
             }

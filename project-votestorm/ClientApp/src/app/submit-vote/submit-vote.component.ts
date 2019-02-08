@@ -42,6 +42,7 @@ export class SubmitVoteComponent {
       });
     });
   }
+
   public onSubmit() {
     const vote: PluralityVote = {
       identity: this.identityService.get(),
@@ -52,5 +53,9 @@ export class SubmitVoteComponent {
     this.voteService.submit(vote).subscribe(_ => {
       this.hasVoted = true;
     });
+  }
+
+  public returnToHome() {
+    this.router.navigateByUrl('/');
   }
 }

@@ -22,7 +22,7 @@ namespace ProjectVotestorm.Data.Repositories
                 connection.Execute(@"CREATE TABLE IF NOT EXISTS PluralityVote
                 (pollId VARCHAR(5),
                 identity VARCHAR(50),
-                selectionindex INTEGER,
+                selectionIndex INTEGER,
                 PRIMARY KEY (pollId, identity))");
             }
         }
@@ -31,7 +31,9 @@ namespace ProjectVotestorm.Data.Repositories
         {
             using (var connection = _connectionManager.GetConnection())
             {
-                return await connection.GetAllAsync<PluralityVote>();
+                return await connection.QueryAsync<PluralityVote>(
+                    "SELECT * FROM PluralityVote WHERE pollId = @pollId",
+                    new {pollId});
             }
         }
 
