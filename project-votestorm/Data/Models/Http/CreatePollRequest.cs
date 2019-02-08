@@ -8,6 +8,6 @@ namespace ProjectVotestorm.Data.Models.Http
         public string Prompt { get; set; }
         public List<string> Options { get; set; }
         public PollType PollType { get; set; }
-        public string AdminId {get; set;}
+        public string Identity {get; set;}
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjectVotestorm.Data.Repositories
 {
-    public class VoteRepository
+    public class VoteRepository : IVoteRepository
     {
         private readonly SqlConnectionManager _connectionManager;
 
@@ -22,8 +22,18 @@ namespace ProjectVotestorm.Data.Repositories
                 connection.Execute(@"CREATE TABLE IF NOT EXISTS PluralityVote
                 (pollId VARCHAR(5),
                 identity VARCHAR(50),
-                selectionindex INTEGER,
+                selectionIndex INTEGER,
                 PRIMARY KEY (pollId, identity))");
+            }
+        }
+
+        public async Task<IEnumerable<PluralityVote>> Get(string pollId)
+        {
+            using (var connection = _connectionManager.GetConnection())
+            {
+                return await connection.QueryAsync<PluralityVote>(
+                    "SELECT * FROM PluralityVote WHERE pollId = @pollId",
+                    new {pollId});
             }
         }
 

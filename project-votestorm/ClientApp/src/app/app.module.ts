@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CreatePollComponent } from './create-poll/create-poll.component';
 import { GotoPollComponent } from './goto-poll/goto-poll.component';
 import { SubmitVoteComponent } from './submit-vote/submit-vote.component';
+import { Config, DevConfig } from './models/config.model';
 import {
   MatInputModule,
   MatButtonModule,
@@ -53,8 +53,10 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatIconModule,
     MatListModule
   ],
-  // TODO: factory provider for IConfig
-  providers: [],
+  providers: [{
+    provide: Config,
+    useFactory: () => new DevConfig()
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

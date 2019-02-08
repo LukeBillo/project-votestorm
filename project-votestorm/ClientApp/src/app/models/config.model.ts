@@ -1,7 +1,7 @@
-export interface Config {
+export abstract class Config {
   readonly apiUrl: string;
 }
 
 export class DevConfig implements Config {
-  apiUrl = 'https://localhost:5001';
+  apiUrl = 'https://localhost:44301';
 }

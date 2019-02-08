@@ -18,15 +18,15 @@ namespace ProjectVotestorm.Data.Models.Database
             Id = id;
             Prompt = createPollRequest.Prompt;
             PollType = createPollRequest.PollType;
-            AdminID = createPollRequest.AdminId;
-            IsOpen = true;//createPollRequest.isOpen;
+            Identity = createPollRequest.Identity;
+            IsActive = true;
         }
 
         [ExplicitKey]
         public string Id { get; set; }
         public string Prompt { get; set; }
         public PollType PollType { get; set; }
-        public bool IsOpen{ get;set;}
-        public string AdminID{get;set;}
+        public bool IsActive { get; set; }
+        public string Identity { get; set; }
     }
 }

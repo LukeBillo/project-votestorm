@@ -1,10 +1,6 @@
-using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ProjectVotestorm.Data.Models;
-using ProjectVotestorm.Data.Models.Http;
 using ProjectVotestorm.Data.Repositories;
-using ProjectVotestorm.Data.Utils;
 
 namespace ProjectVotestorm.Controllers
 {
@@ -12,12 +8,10 @@ namespace ProjectVotestorm.Controllers
     public class ResultsController : Controller
     {
         private readonly IPollRepository _pollRepository;
-        private readonly IPollIdGenerator _pollIdGenerator;
 
-        public ResultsController(IPollIdGenerator pollIdGenerator, IPollRepository pollRepository)
+        public ResultsController(IPollRepository pollRepository)
         {
             _pollRepository = pollRepository;
-            _pollIdGenerator = pollIdGenerator;
         }
 
         [HttpGet]

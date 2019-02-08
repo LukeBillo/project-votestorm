@@ -9,10 +9,7 @@ import { PluralityVote } from '../models/vote.model';
   providedIn: 'root'
 })
 export class VoteService {
-  // TODO: provide this via factory in app.module
-  config: Config = new DevConfig();
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private config: Config) { }
 
   submit(vote: PluralityVote): Observable<void> {
     return this.http.post(`${this.config.apiUrl}/api/poll/${vote.pollId}/vote`, vote).pipe(
@@ -20,4 +17,7 @@ export class VoteService {
     );
   }
 
+  checkHasVoted(pollId: string, identity: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.config.apiUrl}/api/poll/${pollId}/voted?identity=${identity}`);
+  }
 }

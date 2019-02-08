@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { IdentityService } from '../services/identity.service';
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'create-poll',
   templateUrl: './create-poll.component.html',
   styleUrls: ['./create-poll.component.scss'],
@@ -16,8 +15,9 @@ export class CreatePollComponent {
   pollForm = this.formBuilder.group({
     prompt: ['', Validators.required]
   });
-
   options: Array<number> = [0, 1];
+  created = false;
+  createdPollId: string;
 
   constructor(private formBuilder: FormBuilder,
      private pollService: PollService, private router: Router,
@@ -29,7 +29,6 @@ export class CreatePollComponent {
   createNewOption() {
     const optionControlName = `option${this.options.length}`;
     this.pollForm.addControl(optionControlName, new FormControl());
-    console.log('thing');
     this.options.push(this.options.length);
   }
 
@@ -37,8 +36,13 @@ export class CreatePollComponent {
     console.log('asdfasdfasdf');
     const poll = this.constructPoll();
 
-    this.pollService.create(poll).subscribe(_ => {
-      this.router.navigate(['/']);
+    this.pollService.create(poll).subscribe(result => {
+        this.created = true;
+
+        // last element of the object location will
+        // be the poll's ID
+        // location is in format 'http://localhost:5000/api/poll/abcde'
+        this.createdPollId = result.location.split('/').pop();
     });
   }
 
@@ -48,14 +52,12 @@ export class CreatePollComponent {
     const prompt = form.prompt.value;
     const options = [];
     const pollType: PollType = PollType.Plurality;
-    const adminID: string = this.identityService.get();
+    const identity: string = this.identityService.get();
 
     for (let i = 0; i < this.options.length; i++) {
       options.push(form[`option${i}`].value);
     }
-    console.log('asdfasdfasdfasd');
-    console.log(adminID);
-    console.log(pollType);
-    return { prompt: prompt, options, pollType, adminID };
+
+    return { prompt, options, pollType, identity };
   }
 }

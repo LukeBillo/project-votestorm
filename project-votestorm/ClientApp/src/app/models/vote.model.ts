@@ -1,6 +1,6 @@
 
 export class PluralityVote {
-  Identity: string;
+  identity: string;
   pollId: string;
   selectionIndex: number;
 }
