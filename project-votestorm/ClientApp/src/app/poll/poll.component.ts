@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {PollService} from "../services/poll.service";
-import {Poll} from "../models/poll.model";
-import {ActivatedRoute} from "@angular/router";
-import {IdentityService} from "../services/identity.service";
+import {PollService} from '../services/poll.service';
+import {Poll} from '../models/poll.model';
+import {ActivatedRoute} from '@angular/router';
+import {IdentityService} from '../services/identity.service';
 
 @Component({
   selector: 'poll',
@@ -26,11 +26,11 @@ export class PollComponent implements OnInit {
       });
   }
 
-  isAdmin() {
+  get isAdmin(): boolean {
     return this.poll.identity === this.identityService.get();
   }
 
-  isVoter() {
-    return !this.isAdmin();
+  get isVoter(): boolean {
+    return !this.isAdmin;
   }
 }

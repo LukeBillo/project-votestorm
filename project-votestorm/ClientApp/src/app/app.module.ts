@@ -23,7 +23,7 @@ import {
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { PollAdminComponent } from './poll-admin/poll-admin.component';
-import { PollComponent } from "./poll/poll.component";
+import { PollComponent } from './poll/poll.component';
 
 @NgModule({
   declarations: [

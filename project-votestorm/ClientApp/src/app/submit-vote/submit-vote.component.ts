@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VoteService } from '../services/vote.service';
-import { PollService } from "../services/poll.service";
+import { PollService } from '../services/poll.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Poll } from '../models/poll.model';
 import { PluralityVote } from '../models/vote.model';
@@ -23,12 +23,8 @@ export class SubmitVoteComponent implements OnInit {
     private identityService: IdentityService) { }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      let pollId = params['pollId'];
-
-      this.voteService.checkHasVoted(pollId, this.identityService.get()).subscribe(hasVoted => {
-        this.hasVoted = hasVoted;
-      });
+    this.voteService.checkHasVoted(this.poll.id, this.identityService.get()).subscribe(hasVoted => {
+      this.hasVoted = hasVoted;
     });
   }
 

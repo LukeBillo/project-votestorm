@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {
   MatButtonModule,
   MatCardModule,
@@ -8,7 +9,6 @@ import {
   MatRadioModule,
   MatSelectModule,
 } from '@angular/material';
-
 import { CreatePollComponent } from './create-poll.component';
 
 describe('CreatePollComponent', () => {
@@ -26,6 +26,7 @@ describe('CreatePollComponent', () => {
         MatInputModule,
         MatRadioModule,
         MatSelectModule,
+        HttpClientTestingModule,
       ]
     }).compileComponents();
   }));
