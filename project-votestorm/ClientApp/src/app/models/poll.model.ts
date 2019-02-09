@@ -8,7 +8,7 @@ export class Poll {
   identity: string;
   isActive: boolean;
 
-  constructor(prompt, options, type, ownerIdentity) {
+  constructor(prompt: string, options: Array<string>, type: PollType, ownerIdentity: string) {
     this.prompt = prompt;
     this.options = options;
     this.pollType = type;

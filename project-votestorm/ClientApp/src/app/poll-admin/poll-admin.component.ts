@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
-import { Poll } from "../models/poll.model";
-import {PollService} from "../services/poll.service";
-import {IdentityService} from "../services/identity.service";
+import { ActivatedRoute } from '@angular/router';
+import { Poll } from '../models/poll.model';
+import {PollService} from '../services/poll.service';
+import {IdentityService} from '../services/identity.service';
 
 @Component({
   selector: 'poll-admin',
