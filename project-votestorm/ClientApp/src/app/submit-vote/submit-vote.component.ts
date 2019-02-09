@@ -5,7 +5,6 @@ import { PollService } from "../services/poll.service";
 import { Router, ActivatedRoute } from '@angular/router';
 import { Poll } from '../models/poll.model';
 import { PluralityVote } from '../models/vote.model';
-import { Observable } from 'rxjs';
 import { IdentityService } from '../services/identity.service';
 
 @Component({
@@ -14,7 +13,6 @@ import { IdentityService } from '../services/identity.service';
   styleUrls: ['./submit-vote.component.scss'],
 })
 export class SubmitVoteComponent implements OnInit {
-  pollID: string;
   options: Array<string>;
   poll: Poll;
   hasVoted: boolean;
@@ -27,19 +25,19 @@ export class SubmitVoteComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      this.pollID = params['pollId'];
-    });
+      let pollId = params['pollId'];
 
-    this.voteService.checkHasVoted(this.pollID, this.identityService.get()).subscribe(hasVoted => {
-      this.hasVoted = hasVoted;
+      this.voteService.checkHasVoted(pollId, this.identityService.get()).subscribe(hasVoted => {
+        this.hasVoted = hasVoted;
 
-      if (hasVoted) {
-        return;
-      }
+        if (hasVoted) {
+          return;
+        }
 
-      this.pollService.get(this.pollID).subscribe(poll => {
-        this.poll = poll;
-        this.options = poll.options;
+        this.pollService.get(pollId).subscribe(poll => {
+          this.poll = poll;
+          this.options = poll.options;
+        });
       });
     });
   }
@@ -47,7 +45,7 @@ export class SubmitVoteComponent implements OnInit {
   public onSubmit() {
     const vote: PluralityVote = {
       identity: this.identityService.get(),
-      pollId: this.pollID,
+      pollId: this.poll.id,
       selectionIndex: this.voteForm.controls.options.value
     };
 

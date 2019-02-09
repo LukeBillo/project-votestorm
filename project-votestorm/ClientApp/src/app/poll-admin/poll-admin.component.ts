@@ -9,7 +9,6 @@ import {IdentityService} from "../services/identity.service";
   templateUrl: './poll-admin.component.html'
 })
 export class PollAdminComponent implements OnInit {
-  pollId: string;
   poll: Poll;
 
   constructor(private currentRoute: ActivatedRoute, private identityService: IdentityService,
@@ -17,16 +16,14 @@ export class PollAdminComponent implements OnInit {
 
   ngOnInit() {
     this.currentRoute.paramMap.subscribe(routeData => {
-      this.pollId = routeData.get('pollId');
-
-      this.pollService.get(this.pollId).subscribe((poll) => {
+      this.pollService.get(routeData.get('pollId')).subscribe((poll) => {
         this.poll = poll;
       });
     });
   }
 
   onClosePoll() {
-    this.pollService.close(this.pollId, this.identityService.get()).subscribe(() => {
+    this.pollService.close(this.poll.id, this.identityService.get()).subscribe(() => {
       this.poll.isActive = false;
     });
   }

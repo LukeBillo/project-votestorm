@@ -1,6 +1,7 @@
 import { PollType } from './poll-type.enum';
 
 export class Poll {
+  id: string;
   prompt: string;
   options: Array<string>;
   pollType: PollType;
