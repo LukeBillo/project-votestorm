@@ -7,14 +7,14 @@ namespace ProjectVotestorm.Data.Models.Http
 {
     public class ResultsResponse
     {
-        public ResultsResponse(IEnumerable<PluralityVote> votes, PollResponse pollOptions)
+        public ResultsResponse(IEnumerable<PluralityVote> votes, PollResponse poll)
         {
-            PollType = pollOptions.PollType;
+            PollType = poll.PollType;
             OptionResults = new List<PluralityOptionResult>();
 
             var pluralityOptionResults = votes
                 .GroupBy(vote => vote.SelectionIndex)
-                .Select(voteGroup => new PluralityOptionResult(voteGroup.Count(), pollOptions.Options[voteGroup.Key]));
+                .Select(voteGroup => new PluralityOptionResult(voteGroup.Count(), poll.Options[voteGroup.Key]));
 
             OptionResults.AddRange(pluralityOptionResults);
             TotalVotes = OptionResults.Sum(optionResult => optionResult.NumberOfVotes);
