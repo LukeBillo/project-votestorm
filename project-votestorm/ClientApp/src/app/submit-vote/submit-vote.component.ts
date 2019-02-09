@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { VoteService } from '../services/vote.service';
 import { PollService } from "../services/poll.service";
@@ -13,8 +13,7 @@ import { IdentityService } from '../services/identity.service';
   styleUrls: ['./submit-vote.component.scss'],
 })
 export class SubmitVoteComponent implements OnInit {
-  options: Array<string>;
-  poll: Poll;
+  @Input('poll') poll: Poll;
   hasVoted: boolean;
 
   voteForm: FormGroup = this.formBuilder.group({ options: ['1', Validators.required] });
@@ -29,15 +28,6 @@ export class SubmitVoteComponent implements OnInit {
 
       this.voteService.checkHasVoted(pollId, this.identityService.get()).subscribe(hasVoted => {
         this.hasVoted = hasVoted;
-
-        if (hasVoted) {
-          return;
-        }
-
-        this.pollService.get(pollId).subscribe(poll => {
-          this.poll = poll;
-          this.options = poll.options;
-        });
       });
     });
   }

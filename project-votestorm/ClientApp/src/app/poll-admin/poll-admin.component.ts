@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { Poll } from "../models/poll.model";
 import {PollService} from "../services/poll.service";
@@ -9,18 +9,12 @@ import {IdentityService} from "../services/identity.service";
   templateUrl: './poll-admin.component.html'
 })
 export class PollAdminComponent implements OnInit {
-  poll: Poll;
+  @Input('poll') poll: Poll;
 
   constructor(private currentRoute: ActivatedRoute, private identityService: IdentityService,
               private pollService: PollService) { }
 
-  ngOnInit() {
-    this.currentRoute.paramMap.subscribe(routeData => {
-      this.pollService.get(routeData.get('pollId')).subscribe((poll) => {
-        this.poll = poll;
-      });
-    });
-  }
+  ngOnInit() { }
 
   onClosePoll() {
     this.pollService.close(this.poll.id, this.identityService.get()).subscribe(() => {
