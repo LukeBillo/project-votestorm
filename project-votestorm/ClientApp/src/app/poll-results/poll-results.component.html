@@ -1,3 +1,14 @@
-<p>
-  poll-results works!
-</p>
+<div class="row" *ngIf="poll; else loading">
+    <ngx-charts-bar-vertical
+    [results]="single"
+    [gradient]="gradient"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="xAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    (select)="onSelect($event)">
+  </ngx-charts-bar-vertical>
+</div>
+<ng-template #loading>
+  <h3>Loading... Please wait.</h3>
+</ng-template>

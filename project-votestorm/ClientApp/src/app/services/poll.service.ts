@@ -26,4 +26,9 @@ export class PollService {
   get(id: string): Observable<Poll> {
     return this.http.get<Poll>(`${this.config.apiUrl}/api/poll/${id}`);
   }
+
+  close(id: string, userIdentity: string): Observable<any> {
+    return this.http.put(`${this.config.apiUrl}/api/poll/${id}`,
+      { adminIdentity: userIdentity, isActive: false });
+  }
 }
