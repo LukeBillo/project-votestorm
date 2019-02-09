@@ -4,5 +4,5 @@ export class Poll {
   prompt: string;
   options: Array<string>;
   pollType: PollType;
-  identity: string;
+  adminIdentity: string;
 }

@@ -18,7 +18,7 @@ namespace ProjectVotestorm.Data.Models.Database
             Id = id;
             Prompt = createPollRequest.Prompt;
             PollType = createPollRequest.PollType;
-            Identity = createPollRequest.Identity;
+            AdminIdentity = createPollRequest.AdminIdentity;
             IsActive = true;
         }
 
@@ -27,6 +27,6 @@ namespace ProjectVotestorm.Data.Models.Database
         public string Prompt { get; set; }
         public PollType PollType { get; set; }
         public bool IsActive { get; set; }
-        public string Identity { get; set; }
+        public string AdminIdentity { get; set; }
     }
 }

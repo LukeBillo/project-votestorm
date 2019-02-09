@@ -41,8 +41,8 @@ namespace ProjectVotestorm.Controllers
         {
             var poll = await _pollRepository.Read(id);
 
-            if (activateRequest.AdminIdentity != poll.Identity)
-                return new ForbidResult();
+            if (activateRequest.AdminIdentity != poll.AdminIdentity)
+                return new UnauthorizedResult();
 
             await _pollRepository.Update(id,activateRequest);
             return new OkResult();
