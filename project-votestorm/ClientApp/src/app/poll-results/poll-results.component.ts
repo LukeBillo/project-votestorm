@@ -13,8 +13,9 @@ import { timer } from 'rxjs';
 })
 export class PollResultsComponent implements OnDestroy {
   xAxisLabel: string;
-  yAxisLabel = 'votes';
+  yAxisLabel = 'Votes';
   graphData: Array<NgxChartsValuePair>;
+  chartDimensions = [0, 0];
   private _timerSubscription: Subscription;
   private _poll = new BehaviorSubject(null);
 
@@ -36,8 +37,8 @@ export class PollResultsComponent implements OnDestroy {
     const poll = this.poll;
 
     this.resultsService.get(poll.id, this.identityService.get()).subscribe(results => {
-      this.graphData = results.results.map(result => {
-        return { name: result.text, value: result.numberOfVotes };
+      this.graphData = results.optionResults.map(result => {
+        return { name: result.optionText, value: result.numberOfVotes };
       });
     });
   }

@@ -11,6 +11,6 @@ export class ResultsService {
   constructor(private http: HttpClient, private config: Config) {}
 
   public get(pollId: string, identity: string): Observable<PollResults> {
-    return this.http.get<PollResults>(`${this.config.apiUrl}/api/poll/${pollId}/results?adminId=${identity}`);
+    return this.http.get<PollResults>(`${this.config.apiUrl}/api/poll/${pollId}/results?adminIdentity=${identity}`);
   }
 }

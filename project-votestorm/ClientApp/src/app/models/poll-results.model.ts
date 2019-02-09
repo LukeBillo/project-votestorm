@@ -1,9 +1,12 @@
+import { PollType } from './poll-type.enum';
+
 export class PollResults {
-  results: Array<OptionResult>;
+  optionResults: Array<OptionResult>;
+  pollType: PollType;
   totalVotes: number;
 }
 
 export class OptionResult {
-  text: string;
+  optionText: string;
   numberOfVotes: number;
 }

@@ -1,10 +1,14 @@
 <div class="row" *ngIf="poll; else loading">
     <ngx-charts-bar-vertical
+    [view]="chartDimensions"
     [results]="graphData"
+    [xAxis]="true"
+    [yAxis]="true"
     [showXAxisLabel]="true"
     [showYAxisLabel]="true"
     [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel">
+    [yAxisLabel]="yAxisLabel"
+    [showGridLines]="true">
   </ngx-charts-bar-vertical>
 </div>
 <ng-template #loading>
