@@ -51,12 +51,12 @@ export class CreatePollComponent {
     const prompt = form.prompt.value;
     const options = [];
     const pollType: PollType = PollType.Plurality;
-    const identity: string = this.identityService.get();
+    const adminIdentity: string = this.identityService.get();
 
     for (let i = 0; i < this.options.length; i++) {
       options.push(form[`option${i}`].value);
     }
 
-    return new Poll(prompt, options, pollType, identity);
+    return new Poll(prompt, options, pollType, adminIdentity);
   }
 }

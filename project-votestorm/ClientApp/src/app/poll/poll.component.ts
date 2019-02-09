@@ -27,7 +27,7 @@ export class PollComponent implements OnInit {
   }
 
   get isAdmin(): boolean {
-    return this.poll.identity === this.identityService.get();
+    return this.poll.adminIdentity === this.identityService.get();
   }
 
   get isVoter(): boolean {

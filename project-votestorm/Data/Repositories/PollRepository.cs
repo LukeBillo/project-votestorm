@@ -18,7 +18,7 @@ namespace ProjectVotestorm.Data.Repositories
             {
                 connection.Execute(@"CREATE TABLE IF NOT EXISTS Poll
                 (id VARCHAR(5) PRIMARY KEY, prompt VARCHAR(256), pollType INTEGER,
-                isActive BOOLEAN, identity VARCHAR(40))");
+                isActive BOOLEAN, adminIdentity VARCHAR(40))");
 
                 connection.Execute(@"CREATE TABLE IF NOT EXISTS PollOptions
                 (pollId VARCHAR(5), optionText VARCHAR(256), optionIndex INTEGER)");
