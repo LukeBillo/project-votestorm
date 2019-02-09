@@ -1,21 +1,22 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Poll } from '../models/poll.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ResultsService } from '../services/results.service';
 import { IdentityService } from '../services/identity.service';
-import { PollResults, OptionResult } from '../models/poll-results.model';
 import { NgxChartsValuePair } from '../models/ngx-charts-value-pair.model';
+import { timer } from 'rxjs';
 
 @Component({
-  selector: 'app-poll-results',
+  selector: 'poll-results',
   templateUrl: './poll-results.component.html',
   styleUrls: ['./poll-results.component.scss']
 })
-export class PollResultsComponent implements OnInit {
+export class PollResultsComponent implements OnDestroy {
   xAxisLabel: string;
   yAxisLabel = 'votes';
   graphData: Array<NgxChartsValuePair>;
-  private _poll: BehaviorSubject<Poll>;
+  private _timerSubscription: Subscription;
+  private _poll = new BehaviorSubject(null);
 
   @Input('poll') set poll(value: Poll) {
     this.xAxisLabel = value.prompt;
@@ -27,16 +28,21 @@ export class PollResultsComponent implements OnInit {
   }
 
   constructor(private resultsService: ResultsService, private identityService: IdentityService) {
-    this._poll.subscribe(poll => {
-      this.resultsService.get(poll.id, identityService.get()).subscribe(results => {
-          this.graphData = results.results.map(result => {
-            return { name: result.text, value: result.numberOfVotes };
-          });
+    const fiveSecondTimer = timer(0, 5000);
+    this._timerSubscription = fiveSecondTimer.subscribe(_ => this.updateGraphData());
+  }
+
+  private updateGraphData() {
+    const poll = this.poll;
+
+    this.resultsService.get(poll.id, this.identityService.get()).subscribe(results => {
+      this.graphData = results.results.map(result => {
+        return { name: result.text, value: result.numberOfVotes };
       });
     });
   }
 
-  ngOnInit() {
+  ngOnDestroy(): void {
+    this._timerSubscription.unsubscribe();
   }
-
 }
