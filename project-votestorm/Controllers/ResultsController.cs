@@ -19,10 +19,10 @@ namespace ProjectVotestorm.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetResults([FromRoute] string id,[FromQuery]string adminId)
+        public async Task<IActionResult> GetResults([FromRoute] string id, [FromQuery] string adminIdentity)
         {
             var pollOptions = await _pollRepository.Read(id);
-            if (pollOptions.AdminIdentity != adminId)
+            if (pollOptions.AdminIdentity != adminIdentity)
             {
                 return new UnauthorizedResult();
             }

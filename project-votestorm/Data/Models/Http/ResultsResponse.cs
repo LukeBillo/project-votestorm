@@ -9,21 +9,18 @@ namespace ProjectVotestorm.Data.Models.Http
     {
         public ResultsResponse(IEnumerable<PluralityVote> votes, PollResponse pollOptions)
         {
-            PollType = (int)pollOptions.PollType;
-            var votesBySelectionIndex = votes.GroupBy(vote => vote.SelectionIndex);
+            PollType = pollOptions.PollType;
             OptionResults = new List<PluralityOptionResult>();
-            foreach (var vote in votesBySelectionIndex)
-            {
-                int voteCount = vote.Count();
-                TotalVotes += voteCount;
-                PluralityOptionResult optionResult =
-                new PluralityOptionResult(voteCount, pollOptions.Options[vote.Key]);
 
-                OptionResults.Add(optionResult);
-            }
+            var pluralityOptionResults = votes
+                .GroupBy(vote => vote.SelectionIndex)
+                .Select(voteGroup => new PluralityOptionResult(voteGroup.Count(), pollOptions.Options[voteGroup.Key]));
+
+            OptionResults.AddRange(pluralityOptionResults);
+            TotalVotes = OptionResults.Sum(optionResult => optionResult.NumberOfVotes);
         }
         public int TotalVotes { get; set; }
-        public int PollType { get; set; }
+        public PollType PollType { get; set; }
         public List<PluralityOptionResult> OptionResults { get; set; }
     }
 }

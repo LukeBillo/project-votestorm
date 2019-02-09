@@ -7,6 +7,6 @@ namespace ProjectVotestorm.Data.Models.Http
 {
     public class OptionResult
     {
-        public string OptionText{get;set;}
+        public string OptionText { get; set; }
     }
 }
