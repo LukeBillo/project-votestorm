@@ -12,6 +12,6 @@
   </mat-card-content>
 
   <mat-card-actions>
-    <button mat-raised-button color="primary" type="submit">Close</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!poll.isActive" (click)="onClosePoll()">Close</button>
   </mat-card-actions>
 </mat-card>
