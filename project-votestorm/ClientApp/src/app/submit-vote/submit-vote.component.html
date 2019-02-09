@@ -8,7 +8,7 @@
     <mat-card-content>
 
       <mat-radio-group formControlName="options" >
-        <mat-radio-button [value]="i" *ngFor="let o of options; let i = index">
+        <mat-radio-button [value]="i" *ngFor="let o of poll.options; let i = index">
         {{o}}
         </mat-radio-button>
       </mat-radio-group>
