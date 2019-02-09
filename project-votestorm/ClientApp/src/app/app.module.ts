@@ -22,6 +22,8 @@ import {
 } from '@angular/material';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LayoutModule } from '@angular/cdk/layout';
+import { PollAdminComponent } from './poll-admin/poll-admin.component';
+import { PollComponent } from './poll/poll.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { LayoutModule } from '@angular/cdk/layout';
     NavBarComponent,
     GotoPollComponent,
     SubmitVoteComponent,
-    NavBarComponent
+    NavBarComponent,
+    PollAdminComponent,
+    PollComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -39,7 +43,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: ':pollId', component: SubmitVoteComponent, pathMatch: 'full' }
+      { path: ':pollId', component: PollComponent, pathMatch: 'full' }
     ]),
     BrowserAnimationsModule,
     MatInputModule,

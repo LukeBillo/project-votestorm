@@ -33,7 +33,6 @@ export class CreatePollComponent {
   }
 
   onSubmit() {
-    
     const poll = this.constructPoll();
 
     this.pollService.create(poll).subscribe(result => {
@@ -53,11 +52,11 @@ export class CreatePollComponent {
     const options = [];
     const pollType: PollType = PollType.Plurality;
     const adminIdentity: string = this.identityService.get();
-    
+
     for (let i = 0; i < this.options.length; i++) {
       options.push(form[`option${i}`].value);
     }
 
-    return { prompt, options, pollType, adminIdentity };
+    return new Poll(prompt, options, pollType, adminIdentity);
   }
 }
