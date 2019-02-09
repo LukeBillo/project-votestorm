@@ -5,13 +5,13 @@ export class Poll {
   prompt: string;
   options: Array<string>;
   pollType: PollType;
-  identity: string;
+  adminIdentity: string;
   isActive: boolean;
 
-  constructor(prompt: string, options: Array<string>, type: PollType, ownerIdentity: string) {
+  constructor(prompt: string, options: Array<string>, type: PollType, adminIdentity: string) {
     this.prompt = prompt;
     this.options = options;
     this.pollType = type;
-    this.identity = ownerIdentity;
+    this.adminIdentity = adminIdentity;
   }
 }
