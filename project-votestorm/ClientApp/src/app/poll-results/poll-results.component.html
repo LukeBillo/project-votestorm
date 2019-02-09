@@ -1,12 +1,10 @@
 <div class="row" *ngIf="poll; else loading">
     <ngx-charts-bar-vertical
-    [results]="single"
-    [gradient]="gradient"
+    [results]="graphData"
     [showXAxisLabel]="true"
     [showYAxisLabel]="true"
     [xAxisLabel]="xAxisLabel"
-    [yAxisLabel]="yAxisLabel"
-    (select)="onSelect($event)">
+    [yAxisLabel]="yAxisLabel">
   </ngx-charts-bar-vertical>
 </div>
 <ng-template #loading>

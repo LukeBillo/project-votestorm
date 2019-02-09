@@ -20,6 +20,7 @@ import {
   MatListModule,
   MatMenuModule
 } from '@angular/material';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { PollResultsComponent } from './poll-results/poll-results.component';
@@ -57,7 +58,8 @@ import { PollComponent } from './poll/poll.component';
     LayoutModule,
     MatMenuModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    NgxChartsModule
   ],
   providers: [{
     provide: Config,
