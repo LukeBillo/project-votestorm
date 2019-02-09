@@ -5,7 +5,7 @@ using ProjectVotestorm.Data.Models.Enums;
 
 namespace ProjectVotestorm.Data.Models.Http
 {
-    public class OptionResult
+    public abstract class OptionResult
     {
         public string OptionText { get; set; }
     }
