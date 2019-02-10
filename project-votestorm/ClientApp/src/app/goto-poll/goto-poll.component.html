@@ -1,0 +1,18 @@
+<form (ngSubmit)="goToPoll()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Go to existing Poll</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="full-size-card-content">
+      <mat-form-field appearance="standard">
+        <mat-label>Enter the 5 character Poll ID...</mat-label>
+        <input matInput [formControl]="pollIdControl">
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Go</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

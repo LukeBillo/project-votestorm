@@ -231,3 +231,10 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+# Client-side
+/**/dist
+/**/wwwroot
+
+# Rider / .IDEA files
+.idea/

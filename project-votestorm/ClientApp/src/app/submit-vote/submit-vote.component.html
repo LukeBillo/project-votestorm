@@ -1,0 +1,29 @@
+<form [formGroup]="voteForm" novalidate (ngSubmit)="onSubmit()" *ngIf="!hasVoted; else thanksForVoting">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Cast a Vote</mat-card-title>
+      <mat-card-subtitle *ngIf="poll"> {{poll.prompt}}</mat-card-subtitle>
+
+    </mat-card-header>
+    <mat-card-content>
+
+      <mat-radio-group formControlName="options" >
+        <mat-radio-button [value]="i" *ngFor="let o of poll.options; let i = index">
+        {{o}}
+        </mat-radio-button>
+      </mat-radio-group>
+
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+<ng-template #thanksForVoting>
+  <div class="row">
+    <div class="col">
+      <h3>Thanks for voting! The presenter will be able to display the results of the poll.</h3>
+      <button mat-raised-button color="primary" (click)="returnToHome()">Return to Front Page</button>
+    </div>
+  </div>
+</ng-template>
