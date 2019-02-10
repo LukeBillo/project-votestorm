@@ -10,10 +10,12 @@ namespace ProjectVotestorm.Controllers
     public class VoteController : Controller
     {
         private readonly IVoteRepository _voteRepository;
+        private readonly IPollRepository _pollRepository;
 
-        public VoteController(IVoteRepository voteRepository)
+        public VoteController(IVoteRepository voteRepository, IPollRepository pollRepository)
         {
             _voteRepository = voteRepository;
+            _pollRepository = pollRepository;
         }
 
         [HttpGet("voted")]
@@ -33,6 +35,12 @@ namespace ProjectVotestorm.Controllers
             if (votes.FirstOrDefault(vote => vote.Identity == voteRequest.Identity) != null)
             {
                 return new ConflictObjectResult($"That user already voted on the poll with ID {pollId}.");
+            }
+
+            var poll = await _pollRepository.Read(pollId);
+            if (!poll.IsActive)
+            {
+                return new StatusCodeResult(423);
             }
 
             await _voteRepository.Create(voteRequest, pollId);
