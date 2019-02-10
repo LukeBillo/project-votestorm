@@ -1,12 +1,15 @@
 import { PollType } from './poll-type.enum';
 
 export class PollResults {
-  optionResults: Array<OptionResult>;
+  optionResults: Array<PluralityOptionResult>;
   pollType: PollType;
   totalVotes: number;
 }
 
-export class OptionResult {
+export abstract class OptionResult {
   optionText: string;
+}
+
+export class PluralityOptionResult extends OptionResult {
   numberOfVotes: number;
 }
