@@ -34,6 +34,8 @@ namespace ProjectVotestorm
             services.AddSingleton<IPollRepository, PollRepository>();
             services.AddSingleton<IVoteRepository, VoteRepository>();
             services.AddSingleton<IPollIdGenerator, PollIdGenerator>();
+
+            services.AddHostedService<ScheduledPollDeletion>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

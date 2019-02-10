@@ -23,7 +23,8 @@ namespace ProjectVotestorm.Data.Repositories
                 (pollId VARCHAR(5),
                 identity VARCHAR(50),
                 selectionIndex INTEGER,
-                PRIMARY KEY (pollId, identity))");
+                PRIMARY KEY (pollId, identity),
+                FOREIGN KEY (pollId) REFERENCES Poll (id) ON DELETE CASCADE)");
             }
         }
 

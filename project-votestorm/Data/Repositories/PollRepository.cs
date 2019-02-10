@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Dapper;
 using Dapper.Contrib.Extensions;
 using ProjectVotestorm.Data.Models.Database;
@@ -18,10 +19,11 @@ namespace ProjectVotestorm.Data.Repositories
             {
                 connection.Execute(@"CREATE TABLE IF NOT EXISTS Poll
                 (id VARCHAR(5) PRIMARY KEY, prompt VARCHAR(256), pollType INTEGER,
-                isActive BOOLEAN, adminIdentity VARCHAR(40))");
+                isActive BOOLEAN, adminIdentity VARCHAR(40), createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP)");
 
                 connection.Execute(@"CREATE TABLE IF NOT EXISTS PollOptions
-                (pollId VARCHAR(5), optionText VARCHAR(256), optionIndex INTEGER)");
+                (pollId VARCHAR(5), optionText VARCHAR(256), optionIndex INTEGER,
+                FOREIGN KEY (pollId) REFERENCES Poll (id) ON DELETE CASCADE)");
             }
         }
 
@@ -58,6 +60,16 @@ namespace ProjectVotestorm.Data.Repositories
                 await connection.ExecuteAsync(
                 "UPDATE Poll set isActive = @isActive WHERE Id = @Id", 
                 new {isActive = activateRequest.IsActive, Id = id});               
+            }
+        }
+
+        public async Task Delete(DateTime olderThan)
+        {
+            using (var connection = _connectionManager.GetConnection())
+            {
+                await connection.ExecuteAsync(
+                    "DELETE FROM Poll WHERE createdAt <= @MinDate",
+                    new { MinDate = olderThan });
             }
         }
     }
