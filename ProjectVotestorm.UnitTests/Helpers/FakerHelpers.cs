@@ -24,5 +24,11 @@ namespace ProjectVotestorm.UnitTests.Helpers
 
                 return new PollResponse(poll, pollOptions);
             });
+
+        public static readonly Faker<CreatePollRequest> CreatePollRequestFaker = new Faker<CreatePollRequest>()
+            .RuleFor(request => request.Prompt, f => f.Random.Words() + "?")
+            .RuleFor(request => request.PollType, _ => PollType.Plurality)
+            .RuleFor(request => request.Options, f => f.Random.WordsArray(2, 5).ToList())
+            .RuleFor(request => request.AdminIdentity, f => f.Random.Guid().ToString());
     }
 }

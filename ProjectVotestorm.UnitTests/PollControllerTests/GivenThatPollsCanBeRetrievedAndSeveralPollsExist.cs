@@ -4,6 +4,7 @@ using Bogus;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using ProjectVotestorm.Controllers;
 using ProjectVotestorm.Data.Models.Http;
 using ProjectVotestorm.Data.Repositories;
 using ProjectVotestorm.Data.Utils;
@@ -28,7 +29,7 @@ namespace ProjectVotestorm.UnitTests.PollControllerTests
             mockPollRepository.Setup(repository => repository.Read(It.IsAny<string>()))
                 .ReturnsAsync((string id) => mockPolls.FirstOrDefault(poll => poll.Id == id));
              
-            var pollController = new Controllers.PollController(mockPollIdGenerator.Object, mockPollRepository.Object);
+            var pollController = new PollController(mockPollIdGenerator.Object, mockPollRepository.Object);
 
             _expectedPollResponse = new Faker().PickRandom(mockPolls);
             _response = (OkObjectResult) await pollController.GetPoll(_expectedPollResponse.Id);

@@ -11,20 +11,15 @@ using ProjectVotestorm.Data.Models.Enums;
 using ProjectVotestorm.Data.Models.Http;
 using ProjectVotestorm.Data.Repositories;
 using ProjectVotestorm.Data.Utils;
+using ProjectVotestorm.UnitTests.Helpers;
 
 namespace ProjectVotestorm.UnitTests.PollControllerTests
 {
     [TestFixture]
     public class GivenThatAPollCanBeCreated
     {
-        private static readonly Faker<CreatePollRequest> CreatePollRequestFaker = new Faker<CreatePollRequest>()
-            .RuleFor(request => request.Prompt, f => f.Random.Words() + "?")
-            .RuleFor(request => request.PollType, _ => PollType.Plurality)
-            .RuleFor(request => request.Options, f => f.Random.WordsArray(2, 5).ToList())
-            .RuleFor(request => request.AdminIdentity, f => f.Random.Guid().ToString());
-
         private const string MockPollId = "abcde";
-        private readonly CreatePollRequest _createPollRequest = CreatePollRequestFaker.Generate();
+        private readonly CreatePollRequest _createPollRequest = FakerHelpers.CreatePollRequestFaker.Generate();
         private Mock<IPollRepository> _mockPollRepository;
         private string _expectedLocation;
         private CreatedResult _result;
