@@ -29,6 +29,11 @@ namespace ProjectVotestorm.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePoll([FromBody] CreatePollRequest poll)
         {
+            if (!ModelState.IsValid)
+            {
+                return new BadRequestResult();
+            }
+
             var pollId = _pollIdGenerator.Generate();
             await _pollRepository.Create(pollId, poll);
 
@@ -39,6 +44,11 @@ namespace ProjectVotestorm.Controllers
         public async Task<IActionResult> SetPollState(
             [FromRoute] string id, [FromBody] SetPollStateRequest setPollStateRequest)
         {
+            if (!ModelState.IsValid)
+            {
+                return new BadRequestResult();
+            }
+            
             var poll = await _pollRepository.Read(id);
 
             if (setPollStateRequest.AdminIdentity != poll.AdminIdentity)

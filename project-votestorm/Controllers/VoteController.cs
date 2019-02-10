@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProjectVotestorm.Data.Models.Http;
 using ProjectVotestorm.Data.Repositories;
+using ProjectVotestorm.Data.Validators;
 
 namespace ProjectVotestorm.Controllers
 {
@@ -30,6 +31,11 @@ namespace ProjectVotestorm.Controllers
         [HttpPost("vote")]
         public async Task<IActionResult> SubmitVote([FromBody] CreatePluralityVoteRequest voteRequest, [FromRoute] string pollId)
         {
+            if (!ModelState.IsValid)
+            {
+                return new BadRequestResult();
+            }
+            
             var votes = await _voteRepository.Get(pollId);
 
             if (votes.FirstOrDefault(vote => vote.Identity == voteRequest.Identity) != null)

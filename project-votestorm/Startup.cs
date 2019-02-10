@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ProjectVotestorm.Data;
 using ProjectVotestorm.Data.Repositories;
 using ProjectVotestorm.Data.Utils;
+using ProjectVotestorm.Data.Validators;
 
 namespace ProjectVotestorm
 {
@@ -22,7 +24,8 @@ namespace ProjectVotestorm
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreatePollRequestValidator>());
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
