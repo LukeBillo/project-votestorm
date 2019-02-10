@@ -15,7 +15,7 @@ namespace ProjectVotestorm.UnitTests.PollControllerTests
     {
         private readonly PollResponse _existingPoll = FakerHelpers.PollFaker.Generate();
         private Mock<IPollRepository> _mockPollRepository;
-        private CreatePollActivateRequest _activateRequest;
+        private SetPollStateRequest _activateRequest;
         private OkResult _result;
 
         [OneTimeSetUp]
@@ -27,10 +27,10 @@ namespace ProjectVotestorm.UnitTests.PollControllerTests
             _mockPollRepository.Setup(mock => mock.Read(It.IsAny<string>()))
                 .ReturnsAsync((string id) => id == _existingPoll.Id ? _existingPoll : null);
 
-            _mockPollRepository.Setup(mock => mock.Update(It.IsAny<string>(), It.IsAny<CreatePollActivateRequest>()))
+            _mockPollRepository.Setup(mock => mock.Update(It.IsAny<string>(), It.IsAny<SetPollStateRequest>()))
                 .Returns(() => Task.CompletedTask);
 
-            _activateRequest = new CreatePollActivateRequest
+            _activateRequest = new SetPollStateRequest
             {
                 IsActive = false,
                 AdminIdentity = _existingPoll.AdminIdentity
