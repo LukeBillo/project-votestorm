@@ -11,7 +11,7 @@
     </mat-list>
   </mat-card-content>
 
-  <poll-results [poll]="poll"></poll-results>
+  <poll-results [poll]="poll" [liveUpdateEnabled]="poll.isActive"></poll-results>
 
   <mat-card-actions>
     <button mat-raised-button color="primary" type="submit" [disabled]="!poll.isActive" (click)="onClosePoll()">Close</button>
