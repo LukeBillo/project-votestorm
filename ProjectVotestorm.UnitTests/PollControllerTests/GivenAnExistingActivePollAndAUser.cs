@@ -21,7 +21,7 @@ namespace ProjectVotestorm.UnitTests.PollControllerTests
         private UnauthorizedResult _result;
 
         [OneTimeSetUp]
-        public async Task WhenThePollIsClosedByTheAdmin()
+        public async Task WhenTheUserAttemptsToCloseThePoll()
         {
             var mockPollIdGenerator = new Mock<IPollIdGenerator>();
             _mockPollRepository = new Mock<IPollRepository>();
