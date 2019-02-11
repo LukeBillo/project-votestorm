@@ -33,9 +33,12 @@ export class PollResultsComponent implements OnDestroy, OnInit {
   @Input('liveUpdateEnabled') set liveUpdateEnabled(isEnabled: boolean) {
     this._liveUpdateEnabled = isEnabled;
 
-    if (this._liveUpdateEnabled) {
+    if (this._liveUpdateEnabled && (!this._timerSubscription || this._timerSubscription.closed)) {
       this._timerSubscription = this.liveUpdateTimer.subscribe(_ => this.updateGraphData());
-    } else if (this._timerSubscription) {
+      return;
+    }
+
+    if (!this.liveUpdateEnabled) {
       this._timerSubscription.unsubscribe();
     }
   }
