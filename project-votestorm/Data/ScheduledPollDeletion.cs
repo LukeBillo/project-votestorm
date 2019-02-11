@@ -36,7 +36,7 @@ namespace ProjectVotestorm.Data
             return Task.CompletedTask;
         }
 
-        private void DeletePolls(object state)
+        public void DeletePolls(object state)
         {
             _logger.LogInformation("Starting the scheduled poll deletion task");
             _pollRepository.Delete(DateTime.Now.Subtract(TimeSpan.FromDays(_pollMaxAge)));
