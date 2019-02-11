@@ -30,5 +30,10 @@ namespace ProjectVotestorm.UnitTests.Helpers
             .RuleFor(request => request.PollType, _ => PollType.Plurality)
             .RuleFor(request => request.Options, f => f.Random.WordsArray(2, 5).ToList())
             .RuleFor(request => request.AdminIdentity, f => f.Random.Guid().ToString());
+
+        public static readonly Faker<PluralityVote> PluralityVoteFaker = new Faker<PluralityVote>()
+            .RuleFor(vote => vote.SelectionIndex, f => f.Random.Int(0, 4))
+            .RuleFor(vote => vote.PollId, f => f.Random.String2(5))
+            .RuleFor(vote => vote.Identity, f => f.Random.Guid().ToString());
     }
 }

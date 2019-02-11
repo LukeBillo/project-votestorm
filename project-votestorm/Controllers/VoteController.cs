@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProjectVotestorm.Data.Models.Http;
@@ -40,7 +41,7 @@ namespace ProjectVotestorm.Controllers
             var poll = await _pollRepository.Read(pollId);
             if (!poll.IsActive)
             {
-                return new StatusCodeResult(423);
+                return new StatusCodeResult((int) HttpStatusCode.Locked);
             }
 
             await _voteRepository.Create(voteRequest, pollId);

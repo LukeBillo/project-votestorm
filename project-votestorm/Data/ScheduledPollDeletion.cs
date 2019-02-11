@@ -13,8 +13,8 @@ namespace ProjectVotestorm.Data
         private readonly IPollRepository _pollRepository;
         private Timer _timer;
         private readonly ILogger<ScheduledPollDeletion> _logger;
-        private double _timerPeriod;
-        private double _pollMaxAge;
+        private readonly double _timerPeriod;
+        private readonly double _pollMaxAge;
 
         public ScheduledPollDeletion(IPollRepository pollRepository, ILogger<ScheduledPollDeletion> logger,
             IConfiguration config)
@@ -36,7 +36,7 @@ namespace ProjectVotestorm.Data
             return Task.CompletedTask;
         }
 
-        private void DeletePolls(Object state)
+        private void DeletePolls(object state)
         {
             _logger.LogInformation("Starting the scheduled poll deletion task");
             _pollRepository.Delete(DateTime.Now.Subtract(TimeSpan.FromDays(_pollMaxAge)));
