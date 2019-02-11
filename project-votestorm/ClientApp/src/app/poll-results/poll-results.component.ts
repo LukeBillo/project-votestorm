@@ -11,13 +11,15 @@ import { timer } from 'rxjs';
   templateUrl: './poll-results.component.html',
   styleUrls: ['./poll-results.component.scss']
 })
-export class PollResultsComponent implements OnDestroy {
+export class PollResultsComponent implements OnDestroy, OnInit {
   xAxisLabel: string;
   yAxisLabel = 'Votes';
   graphData: Array<NgxChartsValuePair>;
   chartDimensions = [0, 0];
+  liveUpdateTimer: Observable<number>;
   private _timerSubscription: Subscription;
   private _poll = new BehaviorSubject(null);
+  private _liveUpdateEnabled: boolean;
 
   @Input('poll') set poll(value: Poll) {
     this.xAxisLabel = value.prompt;
@@ -28,9 +30,26 @@ export class PollResultsComponent implements OnDestroy {
     return this._poll.value;
   }
 
+  @Input('liveUpdateEnabled') set liveUpdateEnabled(isEnabled: boolean) {
+    this._liveUpdateEnabled = isEnabled;
+
+    if (this._liveUpdateEnabled && (!this._timerSubscription || this._timerSubscription.closed)) {
+      this._timerSubscription = this.liveUpdateTimer.subscribe(_ => this.updateGraphData());
+      return;
+    }
+
+    if (!this.liveUpdateEnabled) {
+      this._timerSubscription.unsubscribe();
+    }
+  }
+
   constructor(private resultsService: ResultsService, private identityService: IdentityService) {
-    const fiveSecondTimer = timer(0, 5000);
-    this._timerSubscription = fiveSecondTimer.subscribe(_ => this.updateGraphData());
+    this.liveUpdateTimer = timer(0, 5000);
+  }
+
+  ngOnInit() {
+    // to make sure we populate the graph at least once
+    this.updateGraphData();
   }
 
   private updateGraphData() {
