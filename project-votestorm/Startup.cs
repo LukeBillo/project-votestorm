@@ -25,7 +25,7 @@ namespace ProjectVotestorm
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreatePollRequestValidator>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Program>());
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
