@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ProjectVotestorm.Data.Models.Http;
 using ProjectVotestorm.Data.Repositories;
-using ProjectVotestorm.Data.Validators;
 
 namespace ProjectVotestorm.Controllers
 {
@@ -12,46 +13,73 @@ namespace ProjectVotestorm.Controllers
     {
         private readonly IVoteRepository _voteRepository;
         private readonly IPollRepository _pollRepository;
+        private readonly ILogger<VoteController> _logger;
 
-        public VoteController(IVoteRepository voteRepository, IPollRepository pollRepository)
+        public VoteController(IVoteRepository voteRepository, IPollRepository pollRepository,
+            ILogger<VoteController> logger)
         {
             _voteRepository = voteRepository;
             _pollRepository = pollRepository;
+            _logger = logger;
         }
 
         [HttpGet("voted")]
         public async Task<IActionResult> GetHasVoted([FromRoute] string pollId, [FromQuery] string identity)
         {
-            var votes = await _voteRepository.Get(pollId);
-            var hasVoted = votes.FirstOrDefault(vote => vote.Identity == identity) != null;
+            try
+            {
+                var votes = await _voteRepository.Get(pollId);
+                var hasVoted = votes.FirstOrDefault(vote => vote.Identity == identity) != null;
 
-            return new OkObjectResult(hasVoted);
+                return new OkObjectResult(hasVoted);
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.LogError("Failed to find poll with ID " + pollId, e);
+                return new NotFoundObjectResult("No poll found with the given ID");
+            }
         }
 
         [HttpPost("vote")]
-        public async Task<IActionResult> SubmitVote([FromBody] CreatePluralityVoteRequest voteRequest, [FromRoute] string pollId)
+        public async Task<IActionResult> SubmitVote([FromBody] CreatePluralityVoteRequest voteRequest,
+            [FromRoute] string pollId)
         {
             if (!ModelState.IsValid)
             {
-                return new BadRequestResult();
+                return new BadRequestObjectResult("Invalid vote object provided");
             }
-            
-            var votes = await _voteRepository.Get(pollId);
 
+            var votes = await _voteRepository.Get(pollId);
             if (votes.FirstOrDefault(vote => vote.Identity == voteRequest.Identity) != null)
             {
-                return new ConflictObjectResult($"That user already voted on the poll with ID {pollId}.");
+                return new ConflictObjectResult("That user already voted on the poll with ID {pollId}.");
             }
 
-            var poll = await _pollRepository.Read(pollId);
-            if (!poll.IsActive)
+            try
             {
-                return new StatusCodeResult(423);
+                var poll = await _pollRepository.Read(pollId);
+                if (!poll.IsActive)
+                {
+                    return new StatusCodeResult(423);
+                }
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.LogError("Failed to find poll with ID " + pollId, e);
+                return new NotFoundObjectResult("No poll found with the given ID");
             }
 
-            await _voteRepository.Create(voteRequest, pollId);
+            try
+            {
+                await _voteRepository.Create(voteRequest, pollId);
 
-            return new OkResult();
+                return new OkResult();
+            }
+            catch (InvalidOperationException e)
+            {
+                _logger.LogError("Failed to add vote to poll " + pollId, e);
+                return new BadRequestObjectResult("Invalid vote object provided");
+            }
         }
     }
 }

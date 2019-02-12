@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
 using ProjectVotestorm.Controllers;
@@ -38,7 +37,7 @@ namespace ProjectVotestorm.UnitTests.PollControllerTests
                 AdminIdentity = Guid.NewGuid().ToString()
             };
 
-            var pollController = new PollController(mockPollIdGenerator.Object, _mockPollRepository.Object);
+            var pollController = new PollController(mockPollIdGenerator.Object, _mockPollRepository.Object, new NullLogger<PollController>());
             _result = (UnauthorizedResult) await pollController.SetPollState(_existingPoll.Id, _activateRequest);
         }
 
