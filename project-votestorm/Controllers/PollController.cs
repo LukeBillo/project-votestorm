@@ -33,7 +33,7 @@ namespace ProjectVotestorm.Controllers
             }
             catch (InvalidOperationException e)
             {
-                _logger.LogError("Failed to find poll with ID " + id, e);
+                _logger.LogError($"Failed to find poll with ID {id}", e);
                 return new NotFoundObjectResult("No poll found with the given ID");
             }
         }
@@ -79,7 +79,7 @@ namespace ProjectVotestorm.Controllers
             }
             catch (InvalidOperationException e)
             {
-                _logger.LogError("Failed to find poll with ID " + id, e);
+                _logger.LogError($"Failed to find poll with ID {id}", e);
                 return new NotFoundObjectResult("No poll found with the given ID");
             }
 
@@ -93,7 +93,7 @@ namespace ProjectVotestorm.Controllers
             }
             catch (InvalidOperationException e)
             {
-                _logger.LogError("Failed to update state on poll " + id, e);
+                _logger.LogError($"Failed to update state on poll {id}", e);
                 return new BadRequestObjectResult("Invalid poll state provided");
             }
         }

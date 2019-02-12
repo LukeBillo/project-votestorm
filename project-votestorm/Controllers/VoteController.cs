@@ -37,7 +37,7 @@ namespace ProjectVotestorm.Controllers
             }
             catch (InvalidOperationException e)
             {
-                _logger.LogError("Failed to find poll with ID " + pollId, e);
+                _logger.LogError($"Failed to find poll with ID {pollId}", e);
                 return new NotFoundObjectResult("No poll found with the given ID");
             }
         }
@@ -54,7 +54,7 @@ namespace ProjectVotestorm.Controllers
             var votes = await _voteRepository.Get(pollId);
             if (votes.FirstOrDefault(vote => vote.Identity == voteRequest.Identity) != null)
             {
-                return new ConflictObjectResult("That user already voted on the poll with ID {pollId}.");
+                return new ConflictObjectResult($"That user already voted on the poll with ID {pollId}.");
             }
 
             PollResponse poll;
@@ -68,7 +68,7 @@ namespace ProjectVotestorm.Controllers
             }
             catch (InvalidOperationException e)
             {
-                _logger.LogError("Failed to find poll with ID " + pollId, e);
+                _logger.LogError($"Failed to find poll with ID {pollId}", e);
                 return new NotFoundObjectResult("No poll found with the given ID");
             }
 
@@ -85,7 +85,7 @@ namespace ProjectVotestorm.Controllers
             }
             catch (InvalidOperationException e)
             {
-                _logger.LogError("Failed to add vote to poll " + pollId, e);
+                _logger.LogError($"Failed to add vote to poll {pollId}", e);
                 return new BadRequestObjectResult("Invalid vote object provided");
             }
         }
