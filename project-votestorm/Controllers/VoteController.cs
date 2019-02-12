@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProjectVotestorm.Data.Models.Http;
 using ProjectVotestorm.Data.Repositories;
+using ProjectVotestorm.Data.Validators;
 
 namespace ProjectVotestorm.Controllers
 {
@@ -55,9 +56,10 @@ namespace ProjectVotestorm.Controllers
                 return new ConflictObjectResult("That user already voted on the poll with ID {pollId}.");
             }
 
+            PollResponse poll;
             try
             {
-                var poll = await _pollRepository.Read(pollId);
+                poll = await _pollRepository.Read(pollId);
                 if (!poll.IsActive)
                 {
                     return new StatusCodeResult(423);
@@ -67,6 +69,11 @@ namespace ProjectVotestorm.Controllers
             {
                 _logger.LogError("Failed to find poll with ID " + pollId, e);
                 return new NotFoundObjectResult("No poll found with the given ID");
+            }
+
+            if (!CreatePluralityVoteRequestValidator.IsPollVoteValid(poll, voteRequest))
+            {
+                return new BadRequestObjectResult("Invalid vote for the specified poll");
             }
 
             try
