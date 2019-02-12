@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -62,7 +63,7 @@ namespace ProjectVotestorm.Controllers
                 poll = await _pollRepository.Read(pollId);
                 if (!poll.IsActive)
                 {
-                    return new StatusCodeResult(423);
+                    return new StatusCodeResult((int) HttpStatusCode.Locked);
                 }
             }
             catch (InvalidOperationException e)
