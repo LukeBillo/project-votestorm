@@ -74,7 +74,7 @@ namespace ProjectVotestorm.Controllers
                 poll = await _pollRepository.Read(id);
                 if (poll.AdminIdentity != setPollStateRequest.AdminIdentity)
                 {
-                    throw new InvalidOperationException("admin identity in request and in Poll don't match");
+                    return new UnauthorizedResult();
                 }
             }
             catch (InvalidOperationException e)

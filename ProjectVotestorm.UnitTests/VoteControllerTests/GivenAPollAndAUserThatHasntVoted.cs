@@ -11,6 +11,7 @@ using ProjectVotestorm.UnitTests.Helpers;
 
 namespace ProjectVotestorm.UnitTests.VoteControllerTests
 {
+    [TestFixture]
     public class GivenAPollAndAUserThatHasntVoted
     {
         private readonly string _userIdWhoAlreadyVoted = Guid.NewGuid().ToString();
