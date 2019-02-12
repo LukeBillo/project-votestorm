@@ -25,8 +25,8 @@ namespace ProjectVotestorm.Data
             _timerPeriod = Convert.ToDouble(config["AutoPollDeletion:timerFrequencyHours"]);
             _pollMaxAge = Convert.ToDouble(config["AutoPollDeletion:pollMaxAgeDays"]);
             
-            _logger.LogInformation("Timer frequency has been set to " + _timerPeriod + " hours");
-            _logger.LogInformation("Poll max age has been set to " + _pollMaxAge + " days");
+            _logger.LogInformation($"Timer frequency has been set to {_timerPeriod} hours");
+            _logger.LogInformation($"Poll max age has been set to {_pollMaxAge} days");
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -40,6 +40,7 @@ namespace ProjectVotestorm.Data
         {
             _logger.LogInformation("Starting the scheduled poll deletion task");
             _pollRepository.Delete(DateTime.Now.Subtract(TimeSpan.FromDays(_pollMaxAge)));
+            _logger.LogInformation("Completed the scheduled poll deletion task");
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
