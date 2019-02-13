@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,7 @@ using ProjectVotestorm.Data.Utils;
 namespace ProjectVotestorm.AcceptanceTests.HomeTests
 {
     [TestFixture]
-    public class GivenTheHomePageHasTheGoToPollComponentAndAPollExistsWithANonAdminUser
+    public class GivenTheHomePageHasTheGoToPollComponentAndAPollExistsWithAdminUser
     {
         private HomePage _homePage;
         private string _existingPollId;
@@ -39,16 +40,18 @@ namespace ProjectVotestorm.AcceptanceTests.HomeTests
         }
 
         [Test]
-        public void ThenItShouldGoToTheVotePageWithTheCorrectPoll()
+        public void ThenItShouldGoToThePollPageAndShowThePoll()
         {
             var pollPage = _homePage.GoToPollComponent.ClickGoButton();
 
-            Assert.That(pollPage.SubmitVoteComponent.PromptText, Is.EqualTo(_existingPoll.Prompt));
+            Assert.That(pollPage.SubmitVoteComponent, Is.Null);
+            Assert.That(pollPage.PollAdminComponent, Is.Not.Null);
 
-            foreach (var option in _existingPoll.Options)
-            {
-                Assert.That(pollPage.SubmitVoteComponent.PollResponses.Contains(option));
-            }
+            var adminPage = pollPage.PollAdminComponent;
+
+            Assert.That(adminPage.PromptText, Is.EqualTo(_existingPoll.Prompt));
+            Assert.That(adminPage.OptionsText.All(option => _existingPoll.Options.Contains(option)), Is.True);
+            Assert.That(adminPage.IsPollClosed, Is.True);
         }
     }
 }

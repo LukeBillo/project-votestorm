@@ -25,10 +25,10 @@ namespace ProjectVotestorm.AcceptanceTests.Pages.AngularComponents
             GoToPollInputField.SendKeys(pollId);
         }
 
-        public VotePage ClickGoButton()
+        public PollPage ClickGoButton()
         {
             GoButton.Click();
-            return new VotePage();
+            return new PollPage();
         }
     }
 }

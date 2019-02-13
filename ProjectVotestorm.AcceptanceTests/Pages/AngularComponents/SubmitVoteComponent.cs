@@ -43,5 +43,10 @@ namespace ProjectVotestorm.AcceptanceTests.Pages.AngularComponents
             SuccessReturnButton.Click();
             return new HomePage();
         }
+
+        public static bool IsVisible()
+        {
+            return ExpectedConditions.ElementIsVisible(By.CssSelector("submit-vote")) != null;
+        }
     }
 }

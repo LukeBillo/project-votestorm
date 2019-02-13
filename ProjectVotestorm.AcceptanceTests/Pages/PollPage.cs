@@ -6,17 +6,19 @@ using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
 
 namespace ProjectVotestorm.AcceptanceTests.Pages
 {
-    public class VotePage
+    public class PollPage
     {
         private readonly IWebDriver _webDriver = GlobalSetup.WebDriver;
         public readonly SubmitVoteComponent SubmitVoteComponent;
+        public readonly PollAdminComponent PollAdminComponent;
 
-        public VotePage()
+        public PollPage()
         {
             var wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(5));
-            wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("submit-vote")));
+            wait.Until(driver => SubmitVoteComponent.IsVisible() || PollAdminComponent.IsVisible());
 
             SubmitVoteComponent = new SubmitVoteComponent();
+            PollAdminComponent = new PollAdminComponent();
         }
     }
 }
