@@ -16,7 +16,7 @@ namespace ProjectVotestorm.UnitTests.PollControllerTests
     {
         private readonly PollResponse _existingPoll = FakerHelpers.PollFaker.Generate();
         private Mock<IPollRepository> _mockPollRepository;
-        private SetPollStateRequest _activateRequest;
+        private SetPollStateRequest _setPollStateRequest;
         private OkResult _result;
 
         [OneTimeSetUp]
@@ -31,14 +31,14 @@ namespace ProjectVotestorm.UnitTests.PollControllerTests
             _mockPollRepository.Setup(mock => mock.Update(It.IsAny<string>(), It.IsAny<SetPollStateRequest>()))
                 .Returns(() => Task.CompletedTask);
 
-            _activateRequest = new SetPollStateRequest
+            _setPollStateRequest = new SetPollStateRequest
             {
                 IsActive = false,
                 AdminIdentity = _existingPoll.AdminIdentity
             };
 
             var pollController = new PollController(mockPollIdGenerator.Object, _mockPollRepository.Object, new NullLogger<PollController>());
-            _result = (OkResult) await pollController.SetPollState(_existingPoll.Id, _activateRequest);
+            _result = (OkResult) await pollController.SetPollState(_existingPoll.Id, _setPollStateRequest);
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace ProjectVotestorm.UnitTests.PollControllerTests
         [Test]
         public void ThenThePollWasUpdated()
         {
-            _mockPollRepository.Verify(mock => mock.Update(_existingPoll.Id, _activateRequest));
+            _mockPollRepository.Verify(mock => mock.Update(_existingPoll.Id, _setPollStateRequest));
         }
     }
 }
