@@ -13,7 +13,7 @@ using ProjectVotestorm.Data.Utils;
 namespace ProjectVotestorm.AcceptanceTests.HomeTests
 {
     [TestFixture]
-    public class GivenTheHomePageHasTheGoToPollComponentAndAPollExists
+    public class GivenTheHomePageHasTheGoToPollComponentAndAPollExistsWithANonAdminUser
     {
         private HomePage _homePage;
         private string _existingPollId;
@@ -26,7 +26,7 @@ namespace ProjectVotestorm.AcceptanceTests.HomeTests
         };
 
         [OneTimeSetUp]
-        public async Task WhenOnTheHomePageAndGoingToThePollByIdAsANonAdmin()
+        public async Task WhenOnTheHomePageAndGoingToThePollById()
         {
             var pollIdGenerator = GlobalSetup.ServerHost.Services.GetService<IPollIdGenerator>();
             _existingPollId = pollIdGenerator.Generate();
