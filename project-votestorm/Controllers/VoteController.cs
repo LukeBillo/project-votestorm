@@ -29,18 +29,16 @@ namespace ProjectVotestorm.Controllers
         [HttpGet("voted")]
         public async Task<IActionResult> GetHasVoted([FromRoute] string pollId, [FromQuery] string identity)
         {
-            try
+            var poll = _pollRepository.Read(pollId);
+            if (poll == null)
             {
-                var votes = await _voteRepository.Get(pollId);
-                var hasVoted = votes.FirstOrDefault(vote => vote.Identity == identity) != null;
-
-                return new OkObjectResult(hasVoted);
-            }
-            catch (InvalidOperationException e)
-            {
-                _logger.LogError($"Failed to find poll with ID {pollId}", e);
                 return new NotFoundObjectResult("No poll found with the given ID");
             }
+
+            var votes = await _voteRepository.Get(pollId);
+            var hasVoted = votes.FirstOrDefault(vote => vote.Identity == identity) != null;
+
+            return new OkObjectResult(hasVoted);
         }
 
         [HttpPost("vote")]
@@ -53,19 +51,15 @@ namespace ProjectVotestorm.Controllers
                 return new ConflictObjectResult($"That user already voted on the poll with ID {pollId}.");
             }
 
-            PollResponse poll;
-            try
+            var poll = await _pollRepository.Read(pollId);
+            if (poll == null)
             {
-                poll = await _pollRepository.Read(pollId);
-                if (!poll.IsActive)
-                {
-                    return new StatusCodeResult((int) HttpStatusCode.Locked);
-                }
-            }
-            catch (InvalidOperationException e)
-            {
-                _logger.LogError($"Failed to find poll with ID {pollId}", e);
                 return new NotFoundObjectResult("No poll found with the given ID");
+            }
+
+            if (!poll.IsActive)
+            {
+                return new StatusCodeResult((int) HttpStatusCode.Locked);
             }
 
             if (!CreatePluralityVoteRequestValidator.IsPollVoteValid(poll, voteRequest))

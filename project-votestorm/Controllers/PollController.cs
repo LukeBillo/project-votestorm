@@ -27,25 +27,25 @@ namespace ProjectVotestorm.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPoll([FromRoute] string id)
         {
-            try
+            var poll = await _pollRepository.Read(id);
+
+            if (poll == null)
             {
-                var poll = await _pollRepository.Read(id);
-                return new OkObjectResult(poll);
-            }
-            catch (InvalidOperationException e)
-            {
-                _logger.LogError($"Failed to find poll with ID {id}", e);
                 return new NotFoundObjectResult("No poll found with the given ID");
             }
+
+            return new OkObjectResult(poll);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreatePoll([FromBody] CreatePollRequest poll)
         {
             var pollId = _pollIdGenerator.Generate();
+
             try
             {
                 await _pollRepository.Create(pollId, poll);
+
                 return new CreatedResult($"{ControllerContext.HttpContext.Request.GetDisplayUrl()}/{pollId}", poll);
             }
             catch (InvalidOperationException e)
@@ -59,26 +59,17 @@ namespace ProjectVotestorm.Controllers
         public async Task<IActionResult> SetPollState(
             [FromRoute] string id, [FromBody] SetPollStateRequest setPollStateRequest)
         {
-            PollResponse poll;
-            try
+            var poll = await _pollRepository.Read(id);
+            if (poll == null)
             {
-                poll = await _pollRepository.Read(id);
-                if (poll.AdminIdentity != setPollStateRequest.AdminIdentity)
-                {
-                    return new UnauthorizedResult();
-                }
-            }
-            catch (InvalidOperationException e)
-            {
-                _logger.LogError($"Failed to find poll with ID {id}", e);
                 return new NotFoundObjectResult("No poll found with the given ID");
             }
 
+            if (setPollStateRequest.AdminIdentity != poll.AdminIdentity)
+                return new UnauthorizedResult();
+
             try
             {
-                if (setPollStateRequest.AdminIdentity != poll.AdminIdentity)
-                    return new UnauthorizedResult();
-
                 await _pollRepository.Update(id, setPollStateRequest);
                 return new OkResult();
             }

@@ -48,10 +48,19 @@ namespace ProjectVotestorm.Data.Repositories
         {
             using (var connection = _connectionManager.GetConnection())
             {
-                var poll = await connection.QueryFirstAsync<Poll>("SELECT * FROM Poll WHERE Id = @Id", new { Id = id });
-                var pollOptions = await connection.QueryAsync<PollOption>("SELECT * FROM PollOptions WHERE PollId = @Id", new { Id = id });
+                try
+                {
+                    var poll = await connection.QueryFirstAsync<Poll>("SELECT * FROM Poll WHERE Id = @Id",
+                        new { Id = id });
+                    var pollOptions = await connection.QueryAsync<PollOption>("SELECT * FROM PollOptions WHERE PollId = @Id",
+                        new { Id = id });
 
-                return new PollResponse(poll, pollOptions);
+                    return new PollResponse(poll, pollOptions);
+                }
+                catch (InvalidOperationException e)
+                {
+                    return null;
+                }
             }
         }
         public async Task Update(string id, SetPollStateRequest newPollState){
