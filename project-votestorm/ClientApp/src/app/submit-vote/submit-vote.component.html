@@ -1,5 +1,5 @@
 <div class="row" *ngIf="!poll.isActive; else pollOpen">
-  <div class="col">
+  <div class="col poll-closed">
     <h3>This poll is now closed.</h3>
     <p>
       It is no longer possible to vote on this poll. The poll and all its votes will be deleted within
@@ -14,13 +14,13 @@
     <mat-card class="shipping-card">
       <mat-card-header>
         <mat-card-title>Cast a Vote</mat-card-title>
-        <mat-card-subtitle *ngIf="poll"> {{poll.prompt}}</mat-card-subtitle>
+        <mat-card-subtitle class="prompt" *ngIf="poll">{{poll.prompt}}</mat-card-subtitle>
 
       </mat-card-header>
       <mat-card-content>
 
         <mat-radio-group formControlName="options" >
-          <mat-radio-button [value]="i" *ngFor="let o of poll.options; let i = index">
+          <mat-radio-button [value]="i" *ngFor="let o of poll.options; let i = index" class="response" [ngClass]="'response-' + i">
             {{o}}
           </mat-radio-button>
         </mat-radio-group>
@@ -34,7 +34,7 @@
 
   <ng-template #thanksForVoting>
     <div class="row">
-      <div class="col">
+      <div class="col successfully-voted">
         <h3>Thanks for voting! The presenter will be able to display the results of the poll.</h3>
         <button mat-raised-button color="primary" (click)="returnToHome()">Return to Front Page</button>
       </div>
