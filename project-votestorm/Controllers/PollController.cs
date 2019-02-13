@@ -10,6 +10,7 @@ using ProjectVotestorm.Data.Utils;
 namespace ProjectVotestorm.Controllers
 {
     [Route("api/poll")]
+    [ApiController]
     public class PollController : Controller
     {
         private readonly IPollRepository _pollRepository;
@@ -41,11 +42,6 @@ namespace ProjectVotestorm.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePoll([FromBody] CreatePollRequest poll)
         {
-            if (!ModelState.IsValid)
-            {
-                return new BadRequestObjectResult("Invalid poll object provided");
-            }
-
             var pollId = _pollIdGenerator.Generate();
             try
             {
@@ -63,11 +59,6 @@ namespace ProjectVotestorm.Controllers
         public async Task<IActionResult> SetPollState(
             [FromRoute] string id, [FromBody] SetPollStateRequest setPollStateRequest)
         {
-            if (!ModelState.IsValid)
-            {
-                return new BadRequestObjectResult("Invalid poll state provided");
-            }
-
             PollResponse poll;
             try
             {

@@ -11,6 +11,7 @@ using ProjectVotestorm.Data.Validators;
 namespace ProjectVotestorm.Controllers
 {
     [Route("api/poll/{pollid}")]
+    [ApiController]
     public class VoteController : Controller
     {
         private readonly IVoteRepository _voteRepository;
@@ -46,11 +47,6 @@ namespace ProjectVotestorm.Controllers
         public async Task<IActionResult> SubmitVote([FromBody] CreatePluralityVoteRequest voteRequest,
             [FromRoute] string pollId)
         {
-            if (!ModelState.IsValid)
-            {
-                return new BadRequestObjectResult("Invalid vote object provided");
-            }
-
             var votes = await _voteRepository.Get(pollId);
             if (votes.FirstOrDefault(vote => vote.Identity == voteRequest.Identity) != null)
             {
