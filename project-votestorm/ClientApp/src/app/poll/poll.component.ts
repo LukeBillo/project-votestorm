@@ -22,6 +22,9 @@ export class PollComponent implements OnInit {
         this.pollService.get(params['pollId']).subscribe(poll => {
           this.poll = poll;
           this.isLoading = false;
+        }, error => {
+          this.poll = undefined;
+          this.isLoading = false;
         });
       });
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import {FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,8 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./goto-poll.component.scss']
 })
 export class GotoPollComponent {
-  // TODO: add validator for min/max length and/or regex
-  pollIdControl = new FormControl();
+  pollIdControl = new FormControl(null, [
+    Validators.required,
+    Validators.pattern('[A-Z1-9]{5}')
+  ]);
 
   constructor(private router: Router) { }
 

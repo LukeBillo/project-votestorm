@@ -1,3 +1,14 @@
-<submit-vote *ngIf="!isLoading && isVoter" [poll]="poll"></submit-vote>
+<div *ngIf="!isLoading && poll; else noPollFound">
+  <submit-vote *ngIf="isVoter" [poll]="poll"></submit-vote>
 
-<poll-admin *ngIf="!isLoading && isAdmin" [poll]="poll"></poll-admin>
+  <poll-admin *ngIf="isAdmin" [poll]="poll"></poll-admin>
+</div>
+
+<ng-template #noPollFound>
+  <div class="row" *ngIf="!isLoading && (poll === undefined)">
+    <div class="col">
+      <h3>No Poll exists with the given ID</h3>
+      <p>Either the ID has been entered incorrectly or the poll has been deleted.</p>
+    </div>
+  </div>
+</ng-template>
