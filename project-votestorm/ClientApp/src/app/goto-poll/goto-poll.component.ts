@@ -10,14 +10,14 @@ import { Router } from '@angular/router';
 export class GotoPollComponent {
   pollIdControl = new FormControl(null, [
     Validators.required,
-    Validators.pattern('[A-Z1-9]{5}')
+    Validators.pattern('[A-Za-z0-9]{5}')
   ]);
 
   constructor(private router: Router) { }
 
   goToPoll() {
     if (this.pollIdControl.value) {
-      this.router.navigateByUrl('/' + this.pollIdControl.value);
+      this.router.navigateByUrl('/' + this.pollIdControl.value.trim());
     }
   }
 }
