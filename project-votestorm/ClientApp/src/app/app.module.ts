@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -26,6 +26,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { PollResultsComponent } from './poll-results/poll-results.component';
 import { PollAdminComponent } from './poll-admin/poll-admin.component';
 import { PollComponent } from './poll/poll.component';
+import {ServerErrorInterceptor} from "./services/server-error-interceptor";
+import { ServerErrorComponent } from './server-error/server-error.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { PollComponent } from './poll/poll.component';
     NavBarComponent,
     PollResultsComponent,
     PollAdminComponent,
-    PollComponent
+    PollComponent,
+    ServerErrorComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,6 +49,7 @@ import { PollComponent } from './poll/poll.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'oops', component: ServerErrorComponent, pathMatch: 'full'},
       { path: ':pollId', component: PollComponent, pathMatch: 'full' }
     ]),
     BrowserAnimationsModule,
@@ -64,6 +68,10 @@ import { PollComponent } from './poll/poll.component';
   providers: [{
     provide: Config,
     useFactory: () => new DevConfig()
+  }, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: ServerErrorInterceptor,
+    multi: true
   }],
   bootstrap: [AppComponent]
 })
