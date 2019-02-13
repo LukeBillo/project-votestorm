@@ -19,7 +19,7 @@ namespace ProjectVotestorm.UnitTests.PollIdGeneratorTests
         [Test]
         public void ThenThePollIdMatchesRegex()
         {
-            Assert.That(Regex.IsMatch(_generatedPollId, "^[A-Z1-9]{5}$"));
+            Assert.That(Regex.IsMatch(_generatedPollId, "^[a-z1-9]{5}$"));
         }
     }
 }
