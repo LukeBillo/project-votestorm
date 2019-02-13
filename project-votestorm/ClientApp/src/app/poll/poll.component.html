@@ -5,7 +5,7 @@
 </div>
 
 <ng-template #noPollFound>
-  <div class="row" *ngIf="!isLoading && (poll === undefined)">
+  <div class="row" *ngIf="!isLoading && !poll">
     <div class="col">
       <h3>No Poll exists with the given ID</h3>
       <p>Either the ID has been entered incorrectly or the poll has been deleted.</p>

@@ -23,7 +23,7 @@ export class PollComponent implements OnInit {
           this.poll = poll;
           this.isLoading = false;
         }, error => {
-          this.poll = undefined;
+          this.poll = null;
           this.isLoading = false;
         });
       });
