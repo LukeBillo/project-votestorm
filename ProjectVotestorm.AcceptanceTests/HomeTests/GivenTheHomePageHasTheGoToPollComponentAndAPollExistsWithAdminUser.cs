@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
+using OpenQA.Selenium.Chrome;
 using ProjectVotestorm.AcceptanceTests.Pages;
 using ProjectVotestorm.Data.Models.Enums;
 using ProjectVotestorm.Data.Models.Http;
@@ -35,8 +36,15 @@ namespace ProjectVotestorm.AcceptanceTests.HomeTests
             var pollRepository = GlobalSetup.ServerHost.Services.GetService<IPollRepository>();
             await pollRepository.Create(_existingPollId, _existingPoll);
 
+            var chromeDriver = (ChromeDriver) GlobalSetup.WebDriver;
+
             _homePage = new HomePage();
             _homePage.GoToPollComponent.EnterPollId(_existingPollId);
+
+            // this has to be set when already on the homepage
+            // otherwise it tries to set it on the data:// page of
+            // chrome which does not accept localstorage entries
+            chromeDriver.WebStorage.LocalStorage.SetItem("identity", _existingPoll.AdminIdentity);
         }
 
         [Test]
@@ -51,6 +59,9 @@ namespace ProjectVotestorm.AcceptanceTests.HomeTests
 
             Assert.That(adminPage.PromptText, Is.EqualTo(_existingPoll.Prompt));
             Assert.That(adminPage.OptionsText.All(option => _existingPoll.Options.Contains(option)), Is.True);
+            Assert.That(adminPage.IsPollClosed, Is.False);
+
+            adminPage.ClosePoll();
             Assert.That(adminPage.IsPollClosed, Is.True);
         }
     }

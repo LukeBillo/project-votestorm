@@ -44,9 +44,17 @@ namespace ProjectVotestorm.AcceptanceTests.Pages.AngularComponents
             return new HomePage();
         }
 
-        public static bool IsVisible()
+        public static bool Exists()
         {
-            return ExpectedConditions.ElementIsVisible(By.CssSelector("submit-vote")) != null;
+            try
+            {
+                GlobalSetup.WebDriver.FindElement(By.CssSelector("submit-vote"));
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
         }
     }
 }

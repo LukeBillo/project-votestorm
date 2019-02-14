@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
 
 namespace ProjectVotestorm.AcceptanceTests.Pages.AngularComponents
 {
@@ -13,32 +12,42 @@ namespace ProjectVotestorm.AcceptanceTests.Pages.AngularComponents
 
          private IWebElement ClosePollButton => _webDriver.FindElement(By.CssSelector("poll-admin button[type=submit]"));
          private IWebElement Prompt => _webDriver.FindElement(By.CssSelector("poll-admin .prompt"));
-
-         private IReadOnlyCollection<IWebElement> Options => _webDriver.FindElements(By.CssSelector("poll-admin .options"));
+         private IEnumerable<IWebElement> Options => _webDriver.FindElements(By.CssSelector("poll-admin .options mat-list-item-content"));
 
          public PollAdminComponent()
          {
             var wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(5));
-            wait.Until(driver => IsVisible());
+            wait.Until(driver => Exists());
          }
 
          public string PromptText => Prompt.Text;
 
          public List<string> OptionsText => Options.Select(option => option.Text).ToList();
 
-         public static bool IsVisible()
-         {
-             return ExpectedConditions.ElementIsVisible(By.CssSelector("poll-admin")) != null;
-         }
+        public static bool Exists()
+        {
+            try
+            {
+                GlobalSetup.WebDriver.FindElement(By.CssSelector("poll-admin"));
+                return true;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
 
-         public bool IsPollClosed()
+        public bool IsPollClosed()
          {
-             return ClosePollButton.Enabled;
+             return !ClosePollButton.Enabled;
          }
 
          public void ClosePoll()
          {
              ClosePollButton.Click();
+
+             var wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(5));
+             wait.Until(_ => !ClosePollButton.Enabled);
          }
     }
 }

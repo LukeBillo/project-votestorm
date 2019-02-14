@@ -2,7 +2,6 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using ProjectVotestorm.AcceptanceTests.Pages.AngularComponents;
-using ExpectedConditions = SeleniumExtras.WaitHelpers.ExpectedConditions;
 
 namespace ProjectVotestorm.AcceptanceTests.Pages
 {
@@ -15,10 +14,13 @@ namespace ProjectVotestorm.AcceptanceTests.Pages
         public PollPage()
         {
             var wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(5));
-            wait.Until(driver => SubmitVoteComponent.IsVisible() || PollAdminComponent.IsVisible());
+            wait.Until(driver => SubmitVoteComponent.Exists() || PollAdminComponent.Exists());
 
-            SubmitVoteComponent = new SubmitVoteComponent();
-            PollAdminComponent = new PollAdminComponent();
+            if (SubmitVoteComponent.Exists())
+                SubmitVoteComponent = new SubmitVoteComponent();
+
+            if (PollAdminComponent.Exists())
+                PollAdminComponent = new PollAdminComponent();
         }
     }
 }
