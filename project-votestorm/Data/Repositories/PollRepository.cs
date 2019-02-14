@@ -57,7 +57,7 @@ namespace ProjectVotestorm.Data.Repositories
 
                     return new PollResponse(poll, pollOptions);
                 }
-                catch (InvalidOperationException e)
+                catch (InvalidOperationException)
                 {
                     return null;
                 }

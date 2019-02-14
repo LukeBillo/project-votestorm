@@ -38,7 +38,7 @@ namespace ProjectVotestorm.Data.Repositories
                         "SELECT * FROM PluralityVote WHERE pollId = @pollId",
                         new {pollId});
                 }
-                catch (InvalidOperationException e)
+                catch (InvalidOperationException)
                 {
                     return new List<PluralityVote>();
                 }
