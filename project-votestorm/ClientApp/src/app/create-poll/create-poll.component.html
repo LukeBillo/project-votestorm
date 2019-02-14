@@ -36,7 +36,8 @@
 <ng-template #createdTemplate>
   <div class="row">
     <div class="col">
-      <h3>Your poll has been created. You can access your poll using the ID: {{ createdPollId }}</h3>
+      <h3>Your poll has been created. You can access your poll by clicking <a [routerLink]="['/', createdPollId]">here</a>.
+        The ID for the poll is: {{ createdPollId }}</h3>
     </div>
   </div>
 </ng-template>
