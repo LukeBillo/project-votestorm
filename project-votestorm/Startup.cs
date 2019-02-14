@@ -54,7 +54,8 @@ namespace ProjectVotestorm
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseDeveloperExceptionPage();
+                //app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
