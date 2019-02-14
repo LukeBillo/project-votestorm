@@ -1,13 +1,10 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using Bogus;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
 using ProjectVotestorm.Controllers;
-using ProjectVotestorm.Data.Models.Enums;
 using ProjectVotestorm.Data.Models.Http;
 using ProjectVotestorm.Data.Repositories;
 using ProjectVotestorm.Data.Utils;
@@ -41,7 +38,7 @@ namespace ProjectVotestorm.UnitTests.PollControllerTests
             mockControllerContext.HttpContext.Request.Path = "/api/poll";
             _expectedLocation = $"https://localhost:44301/api/poll/{MockPollId}";
 
-            var pollController = new PollController(mockPollIdGenerator.Object, _mockPollRepository.Object)
+            var pollController = new PollController(mockPollIdGenerator.Object, _mockPollRepository.Object, new NullLogger<PollController>())
             {
                 ControllerContext = mockControllerContext
             };

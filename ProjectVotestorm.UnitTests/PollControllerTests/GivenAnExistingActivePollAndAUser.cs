@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
 using ProjectVotestorm.Controllers;
@@ -13,11 +12,12 @@ using ProjectVotestorm.UnitTests.Helpers;
 
 namespace ProjectVotestorm.UnitTests.PollControllerTests
 {
+    [TestFixture]
     public class GivenAnExistingActivePollAndAUser
     {
         private readonly PollResponse _existingPoll = FakerHelpers.PollFaker.Generate();
         private Mock<IPollRepository> _mockPollRepository;
-        private CreatePollActivateRequest _activateRequest;
+        private SetPollStateRequest _setPollStateRequest;
         private UnauthorizedResult _result;
 
         [OneTimeSetUp]
@@ -29,17 +29,17 @@ namespace ProjectVotestorm.UnitTests.PollControllerTests
             _mockPollRepository.Setup(mock => mock.Read(It.IsAny<string>()))
                 .ReturnsAsync((string id) => id == _existingPoll.Id ? _existingPoll : null);
 
-            _mockPollRepository.Setup(mock => mock.Update(It.IsAny<string>(), It.IsAny<CreatePollActivateRequest>()))
+            _mockPollRepository.Setup(mock => mock.Update(It.IsAny<string>(), It.IsAny<SetPollStateRequest>()))
                 .Returns(() => Task.CompletedTask);
 
-            _activateRequest = new CreatePollActivateRequest
+            _setPollStateRequest = new SetPollStateRequest
             {
                 IsActive = false,
                 AdminIdentity = Guid.NewGuid().ToString()
             };
 
-            var pollController = new PollController(mockPollIdGenerator.Object, _mockPollRepository.Object);
-            _result = (UnauthorizedResult) await pollController.SetPollState(_existingPoll.Id, _activateRequest);
+            var pollController = new PollController(mockPollIdGenerator.Object, _mockPollRepository.Object, new NullLogger<PollController>());
+            _result = (UnauthorizedResult) await pollController.SetPollState(_existingPoll.Id, _setPollStateRequest);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace ProjectVotestorm.UnitTests.PollControllerTests
         [Test]
         public void ThenThePollWasNotUpdated()
         {
-            _mockPollRepository.Verify(mock => mock.Update(_existingPoll.Id, _activateRequest), Times.Never);
+            _mockPollRepository.Verify(mock => mock.Update(_existingPoll.Id, _setPollStateRequest), Times.Never);
         }
     }
 }

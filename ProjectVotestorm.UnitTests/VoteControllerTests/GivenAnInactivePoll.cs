@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
 using ProjectVotestorm.Controllers;
@@ -39,7 +40,7 @@ namespace ProjectVotestorm.UnitTests.VoteControllerTests
             _mockVoteRepository.Setup(mock => mock.Create(It.IsAny<CreatePluralityVoteRequest>(), It.IsAny<string>()))
                 .Returns(Task.CompletedTask);
 
-            var voteController = new VoteController(_mockVoteRepository.Object, _mockPollRepository.Object);
+            var voteController = new VoteController(_mockVoteRepository.Object, _mockPollRepository.Object, new NullLogger<VoteController>());
             _voteRequest = new CreatePluralityVoteRequest
             {
                 Identity = _userId,

@@ -17,15 +17,9 @@ namespace ProjectVotestorm.UnitTests.PollIdGeneratorTests
         }
 
         [Test]
-        public void ThenThePollIdIs5Characters()
+        public void ThenThePollIdMatchesRegex()
         {
-            Assert.That(_generatedPollId.Length, Is.EqualTo(5));
-        }
-
-        [Test]
-        public void ThenThePollIdIsLowercaseAToZ()
-        {
-            Assert.That(Regex.IsMatch(_generatedPollId, "^[a-z]+$"));
+            Assert.That(Regex.IsMatch(_generatedPollId, "^[a-z0-9]{5}$"));
         }
     }
 }

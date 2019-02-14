@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
 using ProjectVotestorm.Controllers;
@@ -10,6 +11,7 @@ using ProjectVotestorm.UnitTests.Helpers;
 
 namespace ProjectVotestorm.UnitTests.VoteControllerTests
 {
+    [TestFixture]
     public class GivenAPollAndAUserThatHasntVoted
     {
         private readonly string _userIdWhoAlreadyVoted = Guid.NewGuid().ToString();
@@ -31,7 +33,7 @@ namespace ProjectVotestorm.UnitTests.VoteControllerTests
                 pollId == mockVotes.First().PollId ? mockVotes : null
             );
 
-            var voteController = new VoteController(mockVoteRepository.Object, mockPollRepository.Object);
+            var voteController = new VoteController(mockVoteRepository.Object, mockPollRepository.Object, new NullLogger<VoteController>());
             _result = (OkObjectResult) await voteController.GetHasVoted(_mockPollId, _userIdWhoAlreadyVoted);
         }
 
