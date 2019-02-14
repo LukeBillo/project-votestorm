@@ -18,8 +18,9 @@ export class SubmitVoteComponent implements OnInit {
 
   voteForm: FormGroup = this.formBuilder.group({ options: ['', Validators.required] });
 
-  constructor(private formBuilder: FormBuilder, private voteService: VoteService,
-    private pollService: PollService, private router: Router, private activatedRoute: ActivatedRoute,
+  constructor(private formBuilder: FormBuilder,
+    private voteService: VoteService,
+    private router: Router,
     private identityService: IdentityService) { }
 
   ngOnInit() {

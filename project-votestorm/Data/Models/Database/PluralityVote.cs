@@ -18,6 +18,7 @@ namespace ProjectVotestorm.Data.Models.Database
             PollId = pollId;
             SelectionIndex = createPluralityVoteRequest.SelectionIndex;
         }
+
         public int SelectionIndex { get; set; }
     }
 }
