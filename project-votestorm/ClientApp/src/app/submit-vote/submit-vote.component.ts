@@ -16,10 +16,11 @@ export class SubmitVoteComponent implements OnInit {
   @Input('poll') poll: Poll;
   hasVoted: boolean;
 
-  voteForm: FormGroup = this.formBuilder.group({ options: ['1', Validators.required] });
+  voteForm: FormGroup = this.formBuilder.group({ options: ['', Validators.required] });
 
-  constructor(private formBuilder: FormBuilder, private voteService: VoteService,
-    private pollService: PollService, private router: Router, private activatedRoute: ActivatedRoute,
+  constructor(private formBuilder: FormBuilder,
+    private voteService: VoteService,
+    private router: Router,
     private identityService: IdentityService) { }
 
   ngOnInit() {

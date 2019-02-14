@@ -22,6 +22,11 @@ namespace ProjectVotestorm.Controllers
         public async Task<IActionResult> GetResults([FromRoute] string id, [FromQuery] string adminIdentity)
         {
             var pollOptions = await _pollRepository.Read(id);
+            if (pollOptions == null)
+            {
+                return new NotFoundObjectResult("No poll found with the given ID");
+            }
+
             if (pollOptions.AdminIdentity != adminIdentity)
             {
                 return new UnauthorizedResult();

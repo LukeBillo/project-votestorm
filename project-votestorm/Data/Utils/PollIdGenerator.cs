@@ -5,7 +5,7 @@ namespace ProjectVotestorm.Data.Utils
 {
     public class PollIdGenerator : IPollIdGenerator
     {
-        private const string CharactersForGeneration = "abcdefghijklmnopqrstuvwxyz";
+        private const string CharactersForGeneration = "abcdefghijklmnopqrstuvwxyz1234567890";
         private const int PollIdLength = 5;
 
         public string Generate()

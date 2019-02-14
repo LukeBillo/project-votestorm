@@ -1,19 +1,19 @@
 <mat-card class="shipping-card">
   <mat-card-header>
-    <mat-card-title>{{ poll.prompt }}</mat-card-title>
+    <mat-card-title class="prompt">{{ poll.prompt }}</mat-card-title>
   </mat-card-header>
 
   <mat-card-content>
-    <mat-list>
+    <mat-list class="options">
       <mat-list-item *ngFor="let option of poll.options">
         {{ option }}
       </mat-list-item>
     </mat-list>
   </mat-card-content>
 
-  <poll-results [poll]="poll"></poll-results>
+  <poll-results [poll]="poll" [liveUpdateEnabled]="poll.isActive"></poll-results>
 
   <mat-card-actions>
-    <button mat-raised-button color="primary" type="submit" [disabled]="!poll.isActive" (click)="onClosePoll()">Close</button>
+    <button class="close-button" mat-raised-button color="primary" type="submit" [disabled]="!poll.isActive" (click)="onClosePoll()">Close</button>
   </mat-card-actions>
 </mat-card>

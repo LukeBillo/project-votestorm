@@ -32,9 +32,16 @@ namespace ProjectVotestorm.Data.Repositories
         {
             using (var connection = _connectionManager.GetConnection())
             {
-                return await connection.QueryAsync<PluralityVote>(
-                    "SELECT * FROM PluralityVote WHERE pollId = @pollId",
-                    new {pollId});
+                try
+                {
+                    return await connection.QueryAsync<PluralityVote>(
+                        "SELECT * FROM PluralityVote WHERE pollId = @pollId",
+                        new {pollId});
+                }
+                catch (InvalidOperationException)
+                {
+                    return new List<PluralityVote>();
+                }
             }
         }
 

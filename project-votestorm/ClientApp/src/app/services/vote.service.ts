@@ -12,9 +12,7 @@ export class VoteService {
   constructor(private http: HttpClient, private config: Config) { }
 
   submit(vote: PluralityVote): Observable<void> {
-    return this.http.post(`${this.config.apiUrl}/api/poll/${vote.pollId}/vote`, vote).pipe(
-      map(_ => { })
-    );
+    return this.http.post<void>(`${this.config.apiUrl}/api/poll/${vote.pollId}/vote`, vote);
   }
 
   checkHasVoted(pollId: string, identity: string): Observable<boolean> {

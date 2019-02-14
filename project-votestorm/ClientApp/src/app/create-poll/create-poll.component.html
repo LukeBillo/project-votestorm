@@ -29,14 +29,15 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary" [disabled]="!pollForm.valid" type="submit">Submit</button>
     </mat-card-actions>
   </mat-card>
 </form>
 <ng-template #createdTemplate>
   <div class="row">
     <div class="col">
-      <h3>Your poll has been created. You can access your poll using the ID: {{ createdPollId }}</h3>
+      <h3>Your poll has been created. You can access your poll by clicking <a [routerLink]="['/', createdPollId]">here</a>.
+        The ID for the poll is: {{ createdPollId }}</h3>
     </div>
   </div>
 </ng-template>
