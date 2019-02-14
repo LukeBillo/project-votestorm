@@ -29,7 +29,7 @@
       </div>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
+      <button mat-raised-button color="primary" [disabled]="!pollForm.valid" type="submit">Submit</button>
     </mat-card-actions>
   </mat-card>
 </form>
