@@ -3,6 +3,6 @@
     public enum PollType
     {
         Plurality,
-        Voting
+        Scoring
     }
 }
