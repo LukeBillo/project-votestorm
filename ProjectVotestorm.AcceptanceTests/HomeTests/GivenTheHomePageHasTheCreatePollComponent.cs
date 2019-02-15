@@ -1,11 +1,9 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.Extensions;
 using ProjectVotestorm.AcceptanceTests.Pages;
 using ProjectVotestorm.Data.Models.Enums;
 using ProjectVotestorm.Data.Repositories;
